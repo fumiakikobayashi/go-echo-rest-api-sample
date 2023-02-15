@@ -19,23 +19,13 @@ $ make up
 続いて`make ps` コマンドを実行し、コンテナが`runnning`になっていることを確認してください
 ```
 $ make ps
-NAME                            COMMAND             SERVICE             STATUS              PORTS
-go-learning-environment-app-1   "/bin/sh"           app                 running             
+NAME                           COMMAND                  SERVICE             STATUS              PORTS
+go-ddd-rest-api-sample-app-1   "go run ."               app                 running             0.0.0.0:8080->8080/tcp
+go-ddd-rest-api-sample-db-1    "docker-entrypoint.s…"   db                  running             0.0.0.0:3306->3306/tcp
+go-ddd-rest-api-sample-pma-1   "/docker-entrypoint.…"   pma                 running             0.0.0.0:8088->80/tcp
 
 ```
-これで環境の構築は完了です。最後に実際にgolangを実行できるかどうか確認します。
-
-
-下記コマンドを実行して、コンテナに入ります。
-```
-$ make app
-```
-`go run main.go`で`main.go`を実行します。下記のように現在時刻が表示されれば成功です。
-```
-$ go run main.go
-Welcome to the playground!
-The time is 2023-01-23 12:20:52.048513751 +0000 UTC m=+0.000050001
-```
+これで環境の構築は完了です。
 
 ## Tips
-- 各種コマンドはMakefileをご覧ください [Makefile](https://github.com/PicoCELA/onpremis-api/blob/main/Makefile)# go-ddd-rest-api-sample
+- 各種コマンドはMakefileをご覧ください [Makefile](https://github.com/fumiakikobayashi/customer-management-sample/blob/main/Makefile)
