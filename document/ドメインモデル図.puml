@@ -1,0 +1,15 @@
+@startuml
+left to right direction
+
+hide circle
+hide method
+
+package TODOリスト {
+    class TODO
+    class 担当者
+
+    note right: ・タイトルは1〜30文字\n・説明は100文字以内
+    TODO : タイトル
+    TODO : 説明
+}
+@enduml
