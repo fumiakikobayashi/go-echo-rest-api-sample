@@ -7,7 +7,7 @@
 はじめにリポジトリをクローンして、対象のディレクトリに移動します
 ```
 $ git clone https://github.com/fumiakikobayashi/go-ddd-rest-api-sample.git
-$ cd go-learning-environment
+$ cd go-ddd-rest-api-sample
 ```
 下記コマンドを実行してコンテナを立ち上げてください。（`make`コマンドを使用することで、`Makefile`に定義しているコマンドを実行することができます。）
 
