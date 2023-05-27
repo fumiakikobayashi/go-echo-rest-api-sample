@@ -7,7 +7,7 @@ import (
 )
 
 type GetUserUseCaseInterface interface {
-	GetUser(userId Domains.UserId) Dto.UserDto
+	GetUser(userIdInt int) Dto.UserDto
 }
 
 type getUserUseCase struct {
@@ -18,13 +18,15 @@ func NewGetUserUseCase(repository Repositories.UserRepositoryInterface) GetUserU
 	return &getUserUseCase{repository}
 }
 
-func (useCase *getUserUseCase) GetUser(userId Domains.UserId) Dto.UserDto {
+func (useCase *getUserUseCase) GetUser(userIdInt int) Dto.UserDto {
+	userId := Domains.UserId{
+		Value: userIdInt,
+	}
 	user, err := useCase.repository.FindById(userId)
 	if err != nil {
 		return Dto.UserDto{}
 	}
 
-	userId = user.GetId()
 	return Dto.UserDto{
 		Id:        userId.GetValue(),
 		FirstName: user.GetFirstName(),

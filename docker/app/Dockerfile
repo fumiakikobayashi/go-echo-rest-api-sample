@@ -1,13 +1,15 @@
 FROM golang:1.20.0-bullseye
 
-WORKDIR /go/src/backend
+WORKDIR /app
 
 COPY go.mod go.sum ./
 
 RUN apt-get update \
     && apt-get install git \
-    && go get github.com/gin-gonic/gin \
+    && go get github.com/labstack/echo/v4 \
     && go get github.com/jinzhu/gorm \
-    && go get github.com/go-sql-driver/mysql
+    && go get github.com/go-sql-driver/mysql \
+    && go get -u github.com/cosmtrek/air \
+    && go build -o /go/bin/air github.com/cosmtrek/air
 
-CMD ["go", "run", "."]
+CMD ["air", "-c", ".air.toml"]

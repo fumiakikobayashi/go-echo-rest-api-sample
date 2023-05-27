@@ -17,7 +17,7 @@ services:
     volumes:
       - type: bind
         source: .
-        target: /go/src/backend
+        target: /app
     tty: true
 
   db:

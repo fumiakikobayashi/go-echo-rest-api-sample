@@ -1,19 +1,25 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	"go-ddd-rest-api-sample/src/Infrastructures"
-	"go-ddd-rest-api-sample/src/Presentations/Controllers/User"
+	"net/http"
+
+	"github.com/labstack/echo/v4"
 )
 
 func main() {
+	// DBのセットアップ
 	db := Infrastructures.Init()
 	defer db.Close()
 
-	router := gin.Default()
+	// echoのセットアップ
+	e := echo.New()
 
-	var controller User.UserController
-	router.GET("/users/:userId", controller.GetUser)
+	// ルーティング
+	e.GET("/", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Hefrerefefefefg!!!!")
+	})
 
-	router.Run(":3000")
+	// サーバーの立ち上げ
+	e.Logger.Fatal(e.Start(":8080"))
 }
