@@ -4,12 +4,18 @@ left to right direction
 hide circle
 hide method
 
-package TODOリスト {
-    class TODO
-    class 担当者
+package タスクリスト {
+    class タスク一覧 {
+    }
 
-    note right: ・タイトルは1〜30文字\n・説明は100文字以内
-    TODO : タイトル
-    TODO : 説明
+    class タスク {
+        タスク名
+        期限
+        お気に入り
+        完了したかどうか
+    }
+    note right: ・タイトルは1〜30文字
+
+    タスク - タスク一覧
 }
 @enduml
