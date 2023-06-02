@@ -15,7 +15,6 @@ func NewGetTaskUseCase(taskRepository TaskRepositoryInterface) *GetTaskUseCase {
 	}
 }
 
-// GetTasks タスクを全件取得する
 func (u *GetTaskUseCase) GetTasks() (Dto.TaskListDto, error) {
 	taskList, err := u.taskRepository.GetTasks()
 	if err != nil {

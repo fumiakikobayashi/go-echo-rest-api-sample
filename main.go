@@ -11,6 +11,7 @@ import (
 	"go-ddd-rest-api-sample/src/Infrastructures/Repositories"
 	"go-ddd-rest-api-sample/src/Presentations/Handlers"
 	UseCases "go-ddd-rest-api-sample/src/UseCases/Task"
+	"net/http"
 )
 
 func main() {
@@ -40,6 +41,23 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.GET("/tasks", taskController.GetTasks)
+	e.HTTPErrorHandler = customHTTPErrorHandler
 
 	e.Start(":8080")
+}
+
+func customHTTPErrorHandler(err error, c echo.Context) {
+	var code int
+	if he, ok := err.(*echo.HTTPError); ok {
+		code = he.Code
+	}
+
+	errorPage := echo.Map{}
+
+	if code == http.StatusNotFound {
+		errorPage["status"] = http.StatusNotFound
+		errorPage["message"] = "該当するエンドポイントは見つかりませんでした。"
+	}
+
+	_ = c.JSON(code, errorPage)
 }
