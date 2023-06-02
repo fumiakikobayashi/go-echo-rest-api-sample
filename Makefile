@@ -16,6 +16,6 @@ destroy:
 ps:
 	docker compose ps
 app:
-	docker compose exec app /bin/sh
+	docker compose exec app bash
 db:
-	docker compose exec db /bin/sh
+	docker compose exec db bash

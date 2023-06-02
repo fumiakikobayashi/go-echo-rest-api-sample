@@ -19,6 +19,7 @@ services:
         source: .
         target: /app
     tty: true
+    command: air -c .air.toml
 
   db:
     build:

@@ -2,32 +2,32 @@ package Infrastructures
 
 import (
 	"fmt"
+	"os"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 )
 
-var (
-	db  *gorm.DB
-	err error
-)
-
 func Init() *gorm.DB {
-	DBMS := "mysql"
-	USER := "user"
-	PASS := "password"
-	HOST := "tcp(db:3306)"
-	DBNAME := "go-test"
-	config := USER + ":" + PASS + "@" + HOST + "/" + DBNAME
+	user := os.Getenv("DB_USERNAME")
+	password := os.Getenv("DB_PASSWORD")
+	dbname := os.Getenv("DB_DATABASE")
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
 
-	db, err = gorm.Open(DBMS, config)
+	// 接続
+	conn := fmt.Sprintf(
+		"%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local",
+		user,
+		password,
+		host,
+		port,
+		dbname,
+	)
+	db, err := gorm.Open("mysql", conn)
 	if err != nil {
-		// 例外処理
-		fmt.Println("接続の失敗")
+		panic(err.Error())
 	}
-	return db
-}
 
-func GetDb() *gorm.DB {
 	return db
 }

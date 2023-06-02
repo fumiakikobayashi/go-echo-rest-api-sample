@@ -1,25 +1,45 @@
 package main
 
 import (
-	"go-ddd-rest-api-sample/src/Infrastructures"
-	"net/http"
-
+	"fmt"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"go-ddd-rest-api-sample/src/Infrastructures"
+	"go-ddd-rest-api-sample/src/Infrastructures/Repositories"
+	"go-ddd-rest-api-sample/src/Presentations/Handlers"
+	UseCases "go-ddd-rest-api-sample/src/UseCases/Task"
 )
 
 func main() {
-	// DBのセットアップ
-	db := Infrastructures.Init()
-	defer db.Close()
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file")
+		panic(err.Error())
+	}
 
-	// echoのセットアップ
+	db := Infrastructures.Init()
+	defer func(db *gorm.DB) {
+		err := db.Close()
+		if err != nil {
+			panic("failed to disconnect database")
+		}
+	}(db)
+
+	// DI（依存性の注入）
+	taskRepository := Repositories.NewTaskRepository(db)
+	taskUseCase := UseCases.NewGetTaskUseCase(taskRepository)
+	taskController := Handlers.NewTaskHandler(taskUseCase)
+
 	e := echo.New()
 
-	// ルーティング
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hefrerefefefefg!!!!")
-	})
+	// Middleware
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 
-	// サーバーの立ち上げ
-	e.Logger.Fatal(e.Start(":8080"))
+	e.GET("/tasks", taskController.GetTasks)
+
+	e.Start(":8080")
 }

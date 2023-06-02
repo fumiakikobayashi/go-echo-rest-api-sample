@@ -9,7 +9,4 @@ RUN apt-get update \
     && go get github.com/labstack/echo/v4 \
     && go get github.com/jinzhu/gorm \
     && go get github.com/go-sql-driver/mysql \
-    && go get -u github.com/cosmtrek/air \
-    && go build -o /go/bin/air github.com/cosmtrek/air
-
-CMD ["air", "-c", ".air.toml"]
+    && go install github.com/cosmtrek/air@latest \
