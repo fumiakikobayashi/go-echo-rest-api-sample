@@ -9,4 +9,5 @@ RUN apt-get update \
     && go get github.com/labstack/echo/v4 \
     && go get github.com/jinzhu/gorm \
     && go get github.com/go-sql-driver/mysql \
+    && go get github.com/rs/zerolog/log \
     && go install github.com/cosmtrek/air@latest \
