@@ -17,8 +17,7 @@ func NewTaskRepository(db *gorm.DB) UseCase.TaskRepositoryInterface {
 	}
 }
 
-// GetTasks タスク一覧を取得する
-func (r *taskRepository) GetTasks() (Domains.TaskList, error) {
+func (r *taskRepository) GetTasks() (*Domains.TaskList, error) {
 	var taskModels []Models.TaskModel
 	taskList := Domains.NewTaskList()
 
@@ -34,4 +33,18 @@ func (r *taskRepository) GetTasks() (Domains.TaskList, error) {
 	}
 
 	return taskList, nil
+}
+
+func (r *taskRepository) GetTask(taskId Domains.TaskId) (*Domains.Task, error) {
+	var taskModel Models.TaskModel
+
+	if err := r.db.Table("tasks").First(&taskModel, taskId.GetValue()).Error; err != nil {
+		return &Domains.Task{}, err
+	}
+
+	task, err := Domains.CreateTask(taskModel)
+	if err != nil {
+		return &Domains.Task{}, err
+	}
+	return task, nil
 }

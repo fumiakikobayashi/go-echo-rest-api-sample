@@ -6,6 +6,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/rs/zerolog"
 	"go-ddd-rest-api-sample/src/Infrastructures"
 	"go-ddd-rest-api-sample/src/Infrastructures/Repositories"
@@ -49,19 +50,23 @@ func main() {
 
 	// DI（依存性の注入）
 	taskRepository := Repositories.NewTaskRepository(db)
-	taskUseCase := UseCases.NewGetTaskUseCase(taskRepository)
-	taskController := Handlers.NewTaskHandler(taskUseCase)
+	getTasksUseCase := UseCases.NewGetTasksUseCase(taskRepository)
+	getTaskUseCase := UseCases.NewGetTaskUseCase(taskRepository)
+	taskHandler := Handlers.NewTaskHandler(getTasksUseCase, getTaskUseCase)
 
 	// echoの初期化
 	e := echo.New()
 
 	// Middleware
-	//e.Use(middleware.Logger())
-	//e.Use(middleware.Recover())
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 
-	e.GET("/tasks", taskController.GetTasks)
+	// Routes
+	e.GET("/tasks", taskHandler.GetTasks)
+	e.GET("/tasks/:taskId", taskHandler.GetTask)
 	e.HTTPErrorHandler = customHTTPErrorHandler
 
+	// Start server
 	e.Start(":8080")
 }
 
@@ -74,8 +79,11 @@ func customHTTPErrorHandler(err error, c echo.Context) {
 	errorPage := echo.Map{}
 
 	if code == http.StatusNotFound {
-		errorPage["status"] = http.StatusNotFound
 		errorPage["message"] = "該当するエンドポイントは見つかりませんでした。"
+	}
+
+	if code == http.StatusInternalServerError {
+		errorPage["message"] = "予期せぬエラーが発生しました。"
 	}
 
 	_ = c.JSON(code, errorPage)

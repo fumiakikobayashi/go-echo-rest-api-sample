@@ -5,7 +5,7 @@ import (
 	Dto "go-ddd-rest-api-sample/src/UseCases/Dto/Task"
 )
 
-func CreateTaskDtoList(taskList Domains.TaskList) (Dto.TaskListDto, error) {
+func CreateTaskDtoList(taskList *Domains.TaskList) (Dto.TaskListDto, error) {
 	var dtoList []Dto.TaskDto
 	for _, task := range taskList.GetTaskList() {
 		dto, err := CreateTaskDto(task)

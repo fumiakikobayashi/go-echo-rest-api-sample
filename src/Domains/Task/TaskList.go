@@ -6,8 +6,8 @@ type TaskList struct {
 	taskList map[TaskId]*Task
 }
 
-func NewTaskList() TaskList {
-	return TaskList{
+func NewTaskList() *TaskList {
+	return &TaskList{
 		taskList: make(map[TaskId]*Task),
 	}
 }
