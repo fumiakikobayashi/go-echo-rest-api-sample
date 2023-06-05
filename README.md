@@ -1,4 +1,4 @@
-# Go+Gin+Gorm+Docker+DDDのREST APIサンプル
+# Go+echo+Gorm+Docker+DDDのREST APIサンプル
 こちらはタイトル通りGo+echo+Gorm+Docker+DDD(オニオンアーキテクチャ)のREST APIサンプルです。Golangの学習にあたり、アウトプットを目的に作成しました。少しづつ追加実装していく予定です。
 
 ## スタートガイド
