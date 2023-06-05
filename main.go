@@ -52,7 +52,8 @@ func main() {
 	taskRepository := Repositories.NewTaskRepository(db)
 	getTasksUseCase := UseCases.NewGetTasksUseCase(taskRepository)
 	getTaskUseCase := UseCases.NewGetTaskUseCase(taskRepository)
-	taskHandler := Handlers.NewTaskHandler(getTasksUseCase, getTaskUseCase)
+	saveTaskUseCase := UseCases.NewSaveTaskUseCase(taskRepository)
+	taskHandler := Handlers.NewTaskHandler(getTasksUseCase, getTaskUseCase, saveTaskUseCase)
 
 	// echoの初期化
 	e := echo.New()
@@ -64,10 +65,15 @@ func main() {
 	// Routes
 	e.GET("/tasks", taskHandler.GetTasks)
 	e.GET("/tasks/:taskId", taskHandler.GetTask)
+	e.POST("/tasks", taskHandler.SaveTask)
+
+	// エラーハンドラー
 	e.HTTPErrorHandler = customHTTPErrorHandler
 
 	// Start server
-	e.Start(":8080")
+	if err := e.Start(":8080"); err != nil {
+		panic(err.Error())
+	}
 }
 
 func customHTTPErrorHandler(err error, c echo.Context) {

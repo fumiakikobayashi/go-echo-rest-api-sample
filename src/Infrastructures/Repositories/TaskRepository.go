@@ -48,3 +48,19 @@ func (r *taskRepository) GetTask(taskId Domains.TaskId) (*Domains.Task, error) {
 	}
 	return task, nil
 }
+
+func (r *taskRepository) SaveTask(task *Domains.Task) error {
+	taskModel := Models.TaskModel{
+		ID:         task.GetTaskId().GetValue(),
+		Name:       task.GetName(),
+		Deadline:   task.GetDeadline(),
+		IsFavorite: task.GetIsFavorite(),
+		IsComplete: task.GetIsComplete(),
+	}
+
+	if err := r.db.Table("tasks").Create(&taskModel).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

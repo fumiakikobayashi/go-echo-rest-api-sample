@@ -8,7 +8,7 @@ func CreateTask(taskModel Models.TaskModel) (*Task, error) {
 		return &Task{}, err
 	}
 
-	return NewTask(
+	return ReconstructTask(
 		id,
 		taskModel.Name,
 		taskModel.Deadline,

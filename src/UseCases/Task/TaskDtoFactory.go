@@ -9,7 +9,7 @@ func CreateTaskDto(task *Domains.Task) (Dto.TaskDto, error) {
 	return Dto.NewTaskDto(
 		task.GetTaskId().GetValue(),
 		task.GetName(),
-		task.GetDeadline().Format("2006-01-02"),
+		task.GetDeadline().Format(Domains.DeadlineFormat),
 		task.GetIsFavorite(),
 		task.GetIsComplete(),
 	), nil

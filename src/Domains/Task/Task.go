@@ -10,7 +10,18 @@ type Task struct {
 	isComplete bool
 }
 
-func NewTask(taskId TaskId, name string, deadline time.Time, isFavorite bool, isComplete bool) *Task {
+const DeadlineFormat = "2006-01-02"
+
+func CreateNewTask(name string, deadline time.Time) *Task {
+	return &Task{
+		name:       name,
+		deadline:   deadline,
+		isFavorite: false,
+		isComplete: false,
+	}
+}
+
+func ReconstructTask(taskId TaskId, name string, deadline time.Time, isFavorite bool, isComplete bool) *Task {
 	return &Task{
 		taskId:     taskId,
 		name:       name,

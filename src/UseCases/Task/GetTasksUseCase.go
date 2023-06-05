@@ -15,7 +15,7 @@ func NewGetTasksUseCase(taskRepository TaskRepositoryInterface) *GetTasksUseCase
 	}
 }
 
-func (u *GetTasksUseCase) GetTasks() (Dto.TaskListDto, error) {
+func (u *GetTasksUseCase) Execute() (Dto.TaskListDto, error) {
 	taskList, err := u.taskRepository.GetTasks()
 	if err != nil {
 		return Dto.TaskListDto{}, fmt.Errorf("タスク一覧の取得に失敗しました")

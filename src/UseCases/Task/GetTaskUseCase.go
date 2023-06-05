@@ -17,7 +17,7 @@ func NewGetTaskUseCase(taskRepository TaskRepositoryInterface) *GetTaskUseCase {
 	}
 }
 
-func (u *GetTaskUseCase) GetTask(request Requests.GetTaskRequest) (Dto.TaskDto, error) {
+func (u *GetTaskUseCase) Execute(request Requests.GetTaskRequest) (Dto.TaskDto, error) {
 	taskId, _ := Domains.NewTaskId(request.TaskId)
 	task, err := u.taskRepository.GetTask(taskId)
 	if err != nil {
