@@ -8,10 +8,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/rs/zerolog"
+	"go-ddd-rest-api-sample/sdk"
 	"go-ddd-rest-api-sample/src/Infrastructures"
-	"go-ddd-rest-api-sample/src/Infrastructures/Repositories"
-	"go-ddd-rest-api-sample/src/Presentations/Handlers"
-	UseCases "go-ddd-rest-api-sample/src/UseCases/Task"
 	"net/http"
 	"os"
 )
@@ -48,24 +46,8 @@ func main() {
 		zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	}
 
-	// DI（依存性の注入）
-	taskRepository := Repositories.NewTaskRepository(db)
-	getTasksUseCase := UseCases.NewGetTasksUseCase(taskRepository)
-	getTaskUseCase := UseCases.NewGetTaskUseCase(taskRepository)
-	saveTaskUseCase := UseCases.NewSaveTaskUseCase(taskRepository)
-	updateTaskUseCase := UseCases.NewUpdateTaskUseCase(taskRepository)
-	deleteTaskUseCase := UseCases.NewDeleteTaskUseCase(taskRepository)
-	favoriteTaskUseCase := UseCases.NewFavoriteTaskUseCase(taskRepository)
-	completeTaskUseCase := UseCases.NewUpdateTaskCompleteUseCase(taskRepository)
-	taskHandler := Handlers.NewTaskHandler(
-		getTasksUseCase,
-		getTaskUseCase,
-		saveTaskUseCase,
-		updateTaskUseCase,
-		deleteTaskUseCase,
-		favoriteTaskUseCase,
-		completeTaskUseCase,
-	)
+	// 依存性の注入したハンドラーを取得
+	handlers := sdk.NewHandlers(db)
 
 	// echoの初期化
 	e := echo.New()
@@ -75,13 +57,13 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Routes
-	e.GET("/tasks", taskHandler.GetTasks)
-	e.GET("/tasks/:taskId", taskHandler.GetTask)
-	e.POST("/tasks", taskHandler.SaveTask)
-	e.PUT("/tasks/:taskId", taskHandler.UpdateTask)
-	e.PUT("/tasks/:taskId", taskHandler.DeleteTask)
-	e.PATCH("/tasks/:taskId/favorite", taskHandler.UpdateTaskFavorite)
-	e.PATCH("/tasks/:taskId/complete", taskHandler.UpdateTaskFavorite)
+	e.GET("/tasks", handlers.TaskHandler.GetTasks)
+	e.GET("/tasks/:taskId", handlers.TaskHandler.GetTask)
+	e.POST("/tasks", handlers.TaskHandler.SaveTask)
+	e.PUT("/tasks/:taskId", handlers.TaskHandler.UpdateTask)
+	e.PUT("/tasks/:taskId", handlers.TaskHandler.DeleteTask)
+	e.PATCH("/tasks/:taskId/favorite", handlers.TaskHandler.UpdateTaskFavorite)
+	e.PATCH("/tasks/:taskId/complete", handlers.TaskHandler.UpdateTaskFavorite)
 
 	// エラーハンドラー
 	e.HTTPErrorHandler = customHTTPErrorHandler
