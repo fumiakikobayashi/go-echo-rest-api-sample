@@ -2,7 +2,7 @@ package Handlers
 
 import (
 	"github.com/labstack/echo/v4"
-	"go-ddd-rest-api-sample/src/Presentations/Requests"
+	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
 	UseCase "go-ddd-rest-api-sample/src/UseCases/Task"
 	"net/http"
 )
