@@ -8,20 +8,23 @@ import (
 )
 
 type TaskHandler struct {
-	getTasksUseCase UseCase.GetTasksUseCase
-	getTaskUseCase  UseCase.GetTaskUseCase
-	saveTaskUseCase UseCase.SaveTaskUseCase
+	getTasksUseCase   UseCase.GetTasksUseCase
+	getTaskUseCase    UseCase.GetTaskUseCase
+	saveTaskUseCase   UseCase.SaveTaskUseCase
+	updateTaskUseCase UseCase.UpdateTaskUseCase
 }
 
 func NewTaskHandler(
 	getTasksUseCase *UseCase.GetTasksUseCase,
 	getTaskUseCase *UseCase.GetTaskUseCase,
 	saveTaskUseCase *UseCase.SaveTaskUseCase,
+	updateTaskUseCase *UseCase.UpdateTaskUseCase,
 ) *TaskHandler {
 	return &TaskHandler{
-		getTasksUseCase: *getTasksUseCase,
-		getTaskUseCase:  *getTaskUseCase,
-		saveTaskUseCase: *saveTaskUseCase,
+		getTasksUseCase:   *getTasksUseCase,
+		getTaskUseCase:    *getTaskUseCase,
+		saveTaskUseCase:   *saveTaskUseCase,
+		updateTaskUseCase: *updateTaskUseCase,
 	}
 }
 
@@ -60,6 +63,22 @@ func (c *TaskHandler) SaveTask(ctx echo.Context) error {
 
 	response := echo.Map{
 		"message": "タスクを保存しました",
+	}
+	return ctx.JSON(http.StatusOK, response)
+}
+
+func (c *TaskHandler) UpdateTask(ctx echo.Context) error {
+	var taskRequest Requests.UpdateTaskRequest
+	if err := ctx.Bind(&taskRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	if err := c.updateTaskUseCase.Execute(taskRequest); err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+
+	response := echo.Map{
+		"message": "タスクを更新しました",
 	}
 	return ctx.JSON(http.StatusOK, response)
 }

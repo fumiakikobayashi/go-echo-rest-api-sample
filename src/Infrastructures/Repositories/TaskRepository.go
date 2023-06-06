@@ -64,3 +64,19 @@ func (r *taskRepository) SaveTask(task *Domains.Task) error {
 
 	return nil
 }
+
+func (r *taskRepository) UpdateTask(task *Domains.Task) error {
+	taskModel := Models.TaskModel{
+		ID:         task.GetTaskId().GetValue(),
+		Name:       task.GetName(),
+		Deadline:   task.GetDeadline(),
+		IsFavorite: task.GetIsFavorite(),
+		IsComplete: task.GetIsComplete(),
+	}
+
+	if err := r.db.Table("tasks").Update(&taskModel).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

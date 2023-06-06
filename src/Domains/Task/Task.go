@@ -31,6 +31,11 @@ func ReconstructTask(taskId TaskId, name string, deadline time.Time, isFavorite 
 	}
 }
 
+func (t *Task) UpdateTask(name string, deadline time.Time) {
+	t.name = name
+	t.deadline = deadline
+}
+
 func (t *Task) GetTaskId() TaskId {
 	return t.taskId
 }
