@@ -8,11 +8,12 @@ import (
 )
 
 type TaskHandler struct {
-	getTasksUseCase   UseCase.GetTasksUseCase
-	getTaskUseCase    UseCase.GetTaskUseCase
-	saveTaskUseCase   UseCase.SaveTaskUseCase
-	updateTaskUseCase UseCase.UpdateTaskUseCase
-	deleteTaskUseCase UseCase.DeleteTaskUseCase
+	getTasksUseCase     UseCase.GetTasksUseCase
+	getTaskUseCase      UseCase.GetTaskUseCase
+	saveTaskUseCase     UseCase.SaveTaskUseCase
+	updateTaskUseCase   UseCase.UpdateTaskUseCase
+	deleteTaskUseCase   UseCase.DeleteTaskUseCase
+	favoriteTaskUseCase UseCase.FavoriteTaskUseCase
 }
 
 func NewTaskHandler(
@@ -21,13 +22,15 @@ func NewTaskHandler(
 	saveTaskUseCase *UseCase.SaveTaskUseCase,
 	updateTaskUseCase *UseCase.UpdateTaskUseCase,
 	deleteTaskUseCase *UseCase.DeleteTaskUseCase,
+	favoriteTaskUseCase *UseCase.FavoriteTaskUseCase,
 ) *TaskHandler {
 	return &TaskHandler{
-		getTasksUseCase:   *getTasksUseCase,
-		getTaskUseCase:    *getTaskUseCase,
-		saveTaskUseCase:   *saveTaskUseCase,
-		updateTaskUseCase: *updateTaskUseCase,
-		deleteTaskUseCase: *deleteTaskUseCase,
+		getTasksUseCase:     *getTasksUseCase,
+		getTaskUseCase:      *getTaskUseCase,
+		saveTaskUseCase:     *saveTaskUseCase,
+		updateTaskUseCase:   *updateTaskUseCase,
+		deleteTaskUseCase:   *deleteTaskUseCase,
+		favoriteTaskUseCase: *favoriteTaskUseCase,
 	}
 }
 
@@ -93,6 +96,22 @@ func (c *TaskHandler) DeleteTask(ctx echo.Context) error {
 	}
 
 	if err := c.deleteTaskUseCase.Execute(taskRequest); err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+
+	response := echo.Map{
+		"message": "タスクを削除しました",
+	}
+	return ctx.JSON(http.StatusOK, response)
+}
+
+func (c *TaskHandler) FavoriteTask(ctx echo.Context) error {
+	var taskRequest Requests.FavoriteTaskRequest
+	if err := ctx.Bind(&taskRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	if err := c.favoriteTaskUseCase.Execute(taskRequest); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 

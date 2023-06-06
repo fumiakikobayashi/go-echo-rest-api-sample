@@ -36,6 +36,10 @@ func (t *Task) UpdateTask(name string, deadline time.Time) {
 	t.deadline = deadline
 }
 
+func (t *Task) FavoriteTask() {
+	t.isFavorite = !t.isFavorite
+}
+
 func (t *Task) GetTaskId() TaskId {
 	return t.taskId
 }
