@@ -1,11 +1,11 @@
 package Dto
 
 type TaskDto struct {
-	Id         int
-	Name       string
-	Deadline   string
-	IsFavorite bool
-	IsComplete bool
+	Id         int    `json:"id"`
+	Name       string `json:"name"`
+	Deadline   string `json:"deadline"`
+	IsFavorite bool   `json:"isFavorite"`
+	IsComplete bool   `json:"isComplete"`
 }
 
 func NewTaskDto(

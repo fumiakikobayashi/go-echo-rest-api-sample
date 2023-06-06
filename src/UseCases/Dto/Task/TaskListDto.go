@@ -1,11 +1,11 @@
 package Dto
 
 type TaskListDto struct {
-	TaskDtoList []TaskDto
+	TaskList []TaskDto `json:"tasks"`
 }
 
 func NewTaskDtoList(taskDtoList []TaskDto) TaskListDto {
 	return TaskListDto{
-		TaskDtoList: taskDtoList,
+		TaskList: taskDtoList,
 	}
 }
