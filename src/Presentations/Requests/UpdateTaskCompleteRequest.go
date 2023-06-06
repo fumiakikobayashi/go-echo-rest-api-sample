@@ -1,5 +1,5 @@
 package Requests
 
-type FavoriteTaskRequest struct {
+type UpdateTaskCompleteRequest struct {
 	TaskId int `param:"taskId"`
 }

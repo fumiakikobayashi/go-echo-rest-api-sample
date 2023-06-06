@@ -8,12 +8,13 @@ import (
 )
 
 type TaskHandler struct {
-	getTasksUseCase     UseCase.GetTasksUseCase
-	getTaskUseCase      UseCase.GetTaskUseCase
-	saveTaskUseCase     UseCase.SaveTaskUseCase
-	updateTaskUseCase   UseCase.UpdateTaskUseCase
-	deleteTaskUseCase   UseCase.DeleteTaskUseCase
-	favoriteTaskUseCase UseCase.FavoriteTaskUseCase
+	getTasksUseCase           UseCase.GetTasksUseCase
+	getTaskUseCase            UseCase.GetTaskUseCase
+	saveTaskUseCase           UseCase.SaveTaskUseCase
+	updateTaskUseCase         UseCase.UpdateTaskUseCase
+	deleteTaskUseCase         UseCase.DeleteTaskUseCase
+	updateFavoriteTaskUseCase UseCase.UpdateTaskFavoriteUseCase
+	updateCompleteTaskUseCase UseCase.UpdateTaskCompleteUseCase
 }
 
 func NewTaskHandler(
@@ -22,15 +23,17 @@ func NewTaskHandler(
 	saveTaskUseCase *UseCase.SaveTaskUseCase,
 	updateTaskUseCase *UseCase.UpdateTaskUseCase,
 	deleteTaskUseCase *UseCase.DeleteTaskUseCase,
-	favoriteTaskUseCase *UseCase.FavoriteTaskUseCase,
+	updateFavoriteTaskUseCase *UseCase.UpdateTaskFavoriteUseCase,
+	updateCompleteTaskUseCase *UseCase.UpdateTaskCompleteUseCase,
 ) *TaskHandler {
 	return &TaskHandler{
-		getTasksUseCase:     *getTasksUseCase,
-		getTaskUseCase:      *getTaskUseCase,
-		saveTaskUseCase:     *saveTaskUseCase,
-		updateTaskUseCase:   *updateTaskUseCase,
-		deleteTaskUseCase:   *deleteTaskUseCase,
-		favoriteTaskUseCase: *favoriteTaskUseCase,
+		getTasksUseCase:           *getTasksUseCase,
+		getTaskUseCase:            *getTaskUseCase,
+		saveTaskUseCase:           *saveTaskUseCase,
+		updateTaskUseCase:         *updateTaskUseCase,
+		deleteTaskUseCase:         *deleteTaskUseCase,
+		updateFavoriteTaskUseCase: *updateFavoriteTaskUseCase,
+		updateCompleteTaskUseCase: *updateCompleteTaskUseCase,
 	}
 }
 
@@ -105,13 +108,29 @@ func (c *TaskHandler) DeleteTask(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, response)
 }
 
-func (c *TaskHandler) FavoriteTask(ctx echo.Context) error {
-	var taskRequest Requests.FavoriteTaskRequest
+func (c *TaskHandler) UpdateTaskFavorite(ctx echo.Context) error {
+	var taskRequest Requests.UpdateTaskFavoriteRequest
 	if err := ctx.Bind(&taskRequest); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
 
-	if err := c.favoriteTaskUseCase.Execute(taskRequest); err != nil {
+	if err := c.updateFavoriteTaskUseCase.Execute(taskRequest); err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+
+	response := echo.Map{
+		"message": "タスクを削除しました",
+	}
+	return ctx.JSON(http.StatusOK, response)
+}
+
+func (c *TaskHandler) UpdateTaskComplete(ctx echo.Context) error {
+	var taskRequest Requests.UpdateTaskCompleteRequest
+	if err := ctx.Bind(&taskRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	if err := c.updateCompleteTaskUseCase.Execute(taskRequest); err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 

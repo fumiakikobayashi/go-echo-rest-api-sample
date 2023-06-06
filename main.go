@@ -56,6 +56,7 @@ func main() {
 	updateTaskUseCase := UseCases.NewUpdateTaskUseCase(taskRepository)
 	deleteTaskUseCase := UseCases.NewDeleteTaskUseCase(taskRepository)
 	favoriteTaskUseCase := UseCases.NewFavoriteTaskUseCase(taskRepository)
+	completeTaskUseCase := UseCases.NewUpdateTaskCompleteUseCase(taskRepository)
 	taskHandler := Handlers.NewTaskHandler(
 		getTasksUseCase,
 		getTaskUseCase,
@@ -63,6 +64,7 @@ func main() {
 		updateTaskUseCase,
 		deleteTaskUseCase,
 		favoriteTaskUseCase,
+		completeTaskUseCase,
 	)
 
 	// echoの初期化
@@ -78,7 +80,8 @@ func main() {
 	e.POST("/tasks", taskHandler.SaveTask)
 	e.PUT("/tasks/:taskId", taskHandler.UpdateTask)
 	e.PUT("/tasks/:taskId", taskHandler.DeleteTask)
-	e.PATCH("/tasks/:taskId/favorite", taskHandler.FavoriteTask)
+	e.PATCH("/tasks/:taskId/favorite", taskHandler.UpdateTaskFavorite)
+	e.PATCH("/tasks/:taskId/complete", taskHandler.UpdateTaskFavorite)
 
 	// エラーハンドラー
 	e.HTTPErrorHandler = customHTTPErrorHandler

@@ -5,17 +5,17 @@ import (
 	"go-ddd-rest-api-sample/src/Presentations/Requests"
 )
 
-type FavoriteTaskUseCase struct {
+type UpdateTaskCompleteUseCase struct {
 	taskRepository TaskRepositoryInterface
 }
 
-func NewFavoriteTaskUseCase(taskRepository TaskRepositoryInterface) *FavoriteTaskUseCase {
-	return &FavoriteTaskUseCase{
+func NewUpdateTaskCompleteUseCase(taskRepository TaskRepositoryInterface) *UpdateTaskCompleteUseCase {
+	return &UpdateTaskCompleteUseCase{
 		taskRepository: taskRepository,
 	}
 }
 
-func (u *FavoriteTaskUseCase) Execute(request Requests.FavoriteTaskRequest) error {
+func (u *UpdateTaskCompleteUseCase) Execute(request Requests.UpdateTaskCompleteRequest) error {
 	taskId, err := Domains.NewTaskId(request.TaskId)
 	if err != nil {
 		return err
@@ -26,8 +26,7 @@ func (u *FavoriteTaskUseCase) Execute(request Requests.FavoriteTaskRequest) erro
 		return err
 	}
 
-	// お気に入り状態を更新
-	task.FavoriteTask()
+	task.UpdateTaskComplete()
 	if err := u.taskRepository.UpdateTask(task); err != nil {
 		return err
 	}
