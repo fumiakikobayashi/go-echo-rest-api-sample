@@ -80,3 +80,13 @@ func (r *taskRepository) UpdateTask(task *Domains.Task) error {
 
 	return nil
 }
+
+func (r *taskRepository) DeleteTask(taskId Domains.TaskId) error {
+	var taskModel Models.TaskModel
+
+	if err := r.db.Table("tasks").Where("id = ?", taskId.GetValue()).Delete(&taskModel).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

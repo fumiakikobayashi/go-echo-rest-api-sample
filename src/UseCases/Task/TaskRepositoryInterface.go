@@ -7,4 +7,5 @@ type TaskRepositoryInterface interface {
 	GetTask(taskId Domains.TaskId) (*Domains.Task, error)
 	SaveTask(task *Domains.Task) error
 	UpdateTask(task *Domains.Task) error
+	DeleteTask(taskId Domains.TaskId) error
 }

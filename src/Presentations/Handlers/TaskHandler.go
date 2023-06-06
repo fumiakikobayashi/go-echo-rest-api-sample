@@ -12,6 +12,7 @@ type TaskHandler struct {
 	getTaskUseCase    UseCase.GetTaskUseCase
 	saveTaskUseCase   UseCase.SaveTaskUseCase
 	updateTaskUseCase UseCase.UpdateTaskUseCase
+	deleteTaskUseCase UseCase.DeleteTaskUseCase
 }
 
 func NewTaskHandler(
@@ -19,12 +20,14 @@ func NewTaskHandler(
 	getTaskUseCase *UseCase.GetTaskUseCase,
 	saveTaskUseCase *UseCase.SaveTaskUseCase,
 	updateTaskUseCase *UseCase.UpdateTaskUseCase,
+	deleteTaskUseCase *UseCase.DeleteTaskUseCase,
 ) *TaskHandler {
 	return &TaskHandler{
 		getTasksUseCase:   *getTasksUseCase,
 		getTaskUseCase:    *getTaskUseCase,
 		saveTaskUseCase:   *saveTaskUseCase,
 		updateTaskUseCase: *updateTaskUseCase,
+		deleteTaskUseCase: *deleteTaskUseCase,
 	}
 }
 
@@ -79,6 +82,22 @@ func (c *TaskHandler) UpdateTask(ctx echo.Context) error {
 
 	response := echo.Map{
 		"message": "タスクを更新しました",
+	}
+	return ctx.JSON(http.StatusOK, response)
+}
+
+func (c *TaskHandler) DeleteTask(ctx echo.Context) error {
+	var taskRequest Requests.DeleteTaskRequest
+	if err := ctx.Bind(&taskRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	if err := c.deleteTaskUseCase.Execute(taskRequest); err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
+
+	response := echo.Map{
+		"message": "タスクを削除しました",
 	}
 	return ctx.JSON(http.StatusOK, response)
 }
