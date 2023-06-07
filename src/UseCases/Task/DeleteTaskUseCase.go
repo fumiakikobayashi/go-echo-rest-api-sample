@@ -2,17 +2,20 @@ package UseCases
 
 import (
 	"fmt"
+	"go-ddd-rest-api-sample/sdk"
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
-	"go-ddd-rest-api-sample/src/Presentations/Requests"
+	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
 )
 
 type DeleteTaskUseCase struct {
 	taskRepository TaskRepositoryInterface
+	logger         sdk.LoggerInterface
 }
 
-func NewDeleteTaskUseCase(taskRepository TaskRepositoryInterface) *DeleteTaskUseCase {
+func NewDeleteTaskUseCase(taskRepository TaskRepositoryInterface, logger sdk.LoggerInterface) *DeleteTaskUseCase {
 	return &DeleteTaskUseCase{
 		taskRepository: taskRepository,
+		logger:         logger,
 	}
 }
 

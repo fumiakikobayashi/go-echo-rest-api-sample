@@ -2,18 +2,21 @@ package UseCases
 
 import (
 	"fmt"
+	"go-ddd-rest-api-sample/sdk"
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
-	"go-ddd-rest-api-sample/src/Presentations/Requests"
+	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
 	"time"
 )
 
 type SaveTaskUseCase struct {
 	taskRepository TaskRepositoryInterface
+	logger         sdk.LoggerInterface
 }
 
-func NewSaveTaskUseCase(taskRepository TaskRepositoryInterface) *SaveTaskUseCase {
+func NewSaveTaskUseCase(taskRepository TaskRepositoryInterface, logger sdk.LoggerInterface) *SaveTaskUseCase {
 	return &SaveTaskUseCase{
 		taskRepository: taskRepository,
+		logger:         logger,
 	}
 }
 

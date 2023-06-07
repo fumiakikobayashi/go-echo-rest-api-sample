@@ -7,11 +7,9 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/rs/zerolog"
 	"go-ddd-rest-api-sample/sdk"
 	"go-ddd-rest-api-sample/src/Infrastructures"
 	"net/http"
-	"os"
 )
 
 func main() {
@@ -32,22 +30,10 @@ func main() {
 	}(db)
 
 	// ログ設定
-	logLevelMap := map[string]zerolog.Level{
-		"debug": zerolog.DebugLevel,
-		"info":  zerolog.InfoLevel,
-		"warn":  zerolog.WarnLevel,
-		"error": zerolog.ErrorLevel,
-		"fatal": zerolog.FatalLevel,
-		"panic": zerolog.PanicLevel,
-	}
-	if level, ok := logLevelMap[os.Getenv("LOG_LEVEL")]; ok {
-		zerolog.SetGlobalLevel(level)
-	} else {
-		zerolog.SetGlobalLevel(zerolog.InfoLevel)
-	}
+	logger := sdk.NewLogger()
 
 	// 依存性の注入したハンドラーを取得
-	handlers := sdk.NewHandlers(db)
+	handlers := sdk.NewHandlers(db, logger)
 
 	// echoの初期化
 	e := echo.New()

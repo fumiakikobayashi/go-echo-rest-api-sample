@@ -2,18 +2,21 @@ package Repositories
 
 import (
 	"github.com/jinzhu/gorm"
+	"go-ddd-rest-api-sample/sdk"
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
 	"go-ddd-rest-api-sample/src/Infrastructures/Models"
 	UseCase "go-ddd-rest-api-sample/src/UseCases/Task"
 )
 
 type taskRepository struct {
-	db *gorm.DB
+	db     *gorm.DB
+	logger sdk.LoggerInterface
 }
 
-func NewTaskRepository(db *gorm.DB) UseCase.TaskRepositoryInterface {
+func NewTaskRepository(db *gorm.DB, logger sdk.LoggerInterface) UseCase.TaskRepositoryInterface {
 	return &taskRepository{
-		db: db,
+		db:     db,
+		logger: logger,
 	}
 }
 

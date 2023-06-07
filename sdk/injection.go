@@ -11,21 +11,21 @@ type Handlers struct {
 	TaskHandler Presentations.TaskHandler
 }
 
-func NewHandlers(db *gorm.DB) *Handlers {
+func NewHandlers(db *gorm.DB, logger LoggerInterface) *Handlers {
 	return &Handlers{
-		TaskHandler: *injectTaskHandlerDependencies(db),
+		TaskHandler: *injectTaskHandlerDependencies(db, logger),
 	}
 }
 
-func injectTaskHandlerDependencies(db *gorm.DB) *Presentations.TaskHandler {
-	taskRepository := Repositories.NewTaskRepository(db)
-	getTasksUseCase := UseCases.NewGetTasksUseCase(taskRepository)
-	getTaskUseCase := UseCases.NewGetTaskUseCase(taskRepository)
-	saveTaskUseCase := UseCases.NewSaveTaskUseCase(taskRepository)
-	updateTaskUseCase := UseCases.NewUpdateTaskUseCase(taskRepository)
-	deleteTaskUseCase := UseCases.NewDeleteTaskUseCase(taskRepository)
-	favoriteTaskUseCase := UseCases.NewFavoriteTaskUseCase(taskRepository)
-	completeTaskUseCase := UseCases.NewUpdateTaskCompleteUseCase(taskRepository)
+func injectTaskHandlerDependencies(db *gorm.DB, logger LoggerInterface) *Presentations.TaskHandler {
+	taskRepository := Repositories.NewTaskRepository(db, logger)
+	getTasksUseCase := UseCases.NewGetTasksUseCase(taskRepository, logger)
+	getTaskUseCase := UseCases.NewGetTaskUseCase(taskRepository, logger)
+	saveTaskUseCase := UseCases.NewSaveTaskUseCase(taskRepository, logger)
+	updateTaskUseCase := UseCases.NewUpdateTaskUseCase(taskRepository, logger)
+	deleteTaskUseCase := UseCases.NewDeleteTaskUseCase(taskRepository, logger)
+	favoriteTaskUseCase := UseCases.NewFavoriteTaskUseCase(taskRepository, logger)
+	completeTaskUseCase := UseCases.NewUpdateTaskCompleteUseCase(taskRepository, logger)
 	return Presentations.NewTaskHandler(
 		getTasksUseCase,
 		getTaskUseCase,
