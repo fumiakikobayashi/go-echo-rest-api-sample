@@ -33,7 +33,7 @@ func main() {
 	logger := sdk.NewLogger()
 
 	// 依存性の注入したハンドラーを取得
-	handlers := sdk.NewHandlers(db, logger)
+	handlers := NewHandlers(db, logger)
 
 	// echoの初期化
 	e := echo.New()

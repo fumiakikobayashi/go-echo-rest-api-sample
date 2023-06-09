@@ -1,7 +1,8 @@
-package sdk
+package main
 
 import (
 	"github.com/jinzhu/gorm"
+	"go-ddd-rest-api-sample/sdk"
 	"go-ddd-rest-api-sample/src/Infrastructures/Repositories"
 	Presentations "go-ddd-rest-api-sample/src/Presentations/Handlers"
 	UseCases "go-ddd-rest-api-sample/src/UseCases/Task"
@@ -11,13 +12,13 @@ type Handlers struct {
 	TaskHandler Presentations.TaskHandler
 }
 
-func NewHandlers(db *gorm.DB, logger LoggerInterface) *Handlers {
+func NewHandlers(db *gorm.DB, logger sdk.LoggerInterface) *Handlers {
 	return &Handlers{
 		TaskHandler: *injectTaskHandlerDependencies(db, logger),
 	}
 }
 
-func injectTaskHandlerDependencies(db *gorm.DB, logger LoggerInterface) *Presentations.TaskHandler {
+func injectTaskHandlerDependencies(db *gorm.DB, logger sdk.LoggerInterface) *Presentations.TaskHandler {
 	taskRepository := Repositories.NewTaskRepository(db, logger)
 	getTasksUseCase := UseCases.NewGetTasksUseCase(taskRepository, logger)
 	getTaskUseCase := UseCases.NewGetTaskUseCase(taskRepository, logger)
@@ -34,5 +35,6 @@ func injectTaskHandlerDependencies(db *gorm.DB, logger LoggerInterface) *Present
 		deleteTaskUseCase,
 		favoriteTaskUseCase,
 		completeTaskUseCase,
+		logger,
 	)
 }
