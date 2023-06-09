@@ -12,7 +12,7 @@ func CreateTask(taskModel Models.TaskModel) (*Task, error) {
 		id,
 		taskModel.Name,
 		taskModel.Deadline,
-		taskModel.IsFavorite,
-		taskModel.IsCompleted,
+		*taskModel.IsFavorite,
+		*taskModel.IsCompleted,
 	), nil
 }

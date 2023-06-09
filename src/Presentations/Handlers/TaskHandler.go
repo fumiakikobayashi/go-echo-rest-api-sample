@@ -123,7 +123,7 @@ func (c *TaskHandler) UpdateTaskFavorite(ctx echo.Context) error {
 	}
 
 	response := echo.Map{
-		"message": "タスクを削除しました",
+		"message": "お気に入り状態を更新しました",
 	}
 	return ctx.JSON(http.StatusOK, response)
 }
@@ -139,7 +139,7 @@ func (c *TaskHandler) UpdateTaskComplete(ctx echo.Context) error {
 	}
 
 	response := echo.Map{
-		"message": "タスクを削除しました",
+		"message": "完了状態を更新しました",
 	}
 	return ctx.JSON(http.StatusOK, response)
 }

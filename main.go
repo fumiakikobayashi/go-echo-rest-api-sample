@@ -49,7 +49,7 @@ func main() {
 	e.PUT("/tasks/:taskId", handlers.TaskHandler.UpdateTask)
 	e.DELETE("/tasks/:taskId", handlers.TaskHandler.DeleteTask)
 	e.PATCH("/tasks/:taskId/favorite", handlers.TaskHandler.UpdateTaskFavorite)
-	e.PATCH("/tasks/:taskId/complete", handlers.TaskHandler.UpdateTaskFavorite)
+	e.PATCH("/tasks/:taskId/complete", handlers.TaskHandler.UpdateTaskComplete)
 
 	// エラーハンドラー
 	e.HTTPErrorHandler = customHTTPErrorHandler
