@@ -47,7 +47,7 @@ func main() {
 	e.GET("/tasks/:taskId", handlers.TaskHandler.GetTask)
 	e.POST("/tasks", handlers.TaskHandler.SaveTask)
 	e.PUT("/tasks/:taskId", handlers.TaskHandler.UpdateTask)
-	e.PUT("/tasks/:taskId", handlers.TaskHandler.DeleteTask)
+	e.DELETE("/tasks/:taskId", handlers.TaskHandler.DeleteTask)
 	e.PATCH("/tasks/:taskId/favorite", handlers.TaskHandler.UpdateTaskFavorite)
 	e.PATCH("/tasks/:taskId/complete", handlers.TaskHandler.UpdateTaskFavorite)
 

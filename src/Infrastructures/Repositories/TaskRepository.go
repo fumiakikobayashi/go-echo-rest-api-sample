@@ -6,6 +6,7 @@ import (
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
 	"go-ddd-rest-api-sample/src/Infrastructures/Models"
 	UseCase "go-ddd-rest-api-sample/src/UseCases/Task"
+	"time"
 )
 
 type taskRepository struct {
@@ -75,9 +76,10 @@ func (r *taskRepository) UpdateTask(task *Domains.Task) error {
 		Deadline:    task.GetDeadline(),
 		IsFavorite:  task.GetIsFavorite(),
 		IsCompleted: task.GetIsCompleted(),
+		UpdatedAt:   time.Now(),
 	}
 
-	if err := r.db.Table("tasks").Update(&taskModel).Error; err != nil {
+	if err := r.db.Table("tasks").Where("id = ?", taskModel.ID).Updates(&taskModel).Error; err != nil {
 		return err
 	}
 
