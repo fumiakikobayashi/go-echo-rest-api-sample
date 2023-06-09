@@ -2,6 +2,7 @@ package Handlers
 
 import (
 	"github.com/labstack/echo/v4"
+	"go-ddd-rest-api-sample/sdk"
 	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
 	UseCase "go-ddd-rest-api-sample/src/UseCases/Task"
 	"net/http"
@@ -15,6 +16,7 @@ type TaskHandler struct {
 	deleteTaskUseCase         UseCase.DeleteTaskUseCase
 	updateFavoriteTaskUseCase UseCase.UpdateTaskFavoriteUseCase
 	updateCompleteTaskUseCase UseCase.UpdateTaskCompleteUseCase
+	logger                    sdk.LoggerInterface
 }
 
 func NewTaskHandler(
@@ -25,6 +27,7 @@ func NewTaskHandler(
 	deleteTaskUseCase *UseCase.DeleteTaskUseCase,
 	updateFavoriteTaskUseCase *UseCase.UpdateTaskFavoriteUseCase,
 	updateCompleteTaskUseCase *UseCase.UpdateTaskCompleteUseCase,
+	logger sdk.LoggerInterface,
 ) *TaskHandler {
 	return &TaskHandler{
 		getTasksUseCase:           *getTasksUseCase,
@@ -34,6 +37,7 @@ func NewTaskHandler(
 		deleteTaskUseCase:         *deleteTaskUseCase,
 		updateFavoriteTaskUseCase: *updateFavoriteTaskUseCase,
 		updateCompleteTaskUseCase: *updateCompleteTaskUseCase,
+		logger:                    logger,
 	}
 }
 
