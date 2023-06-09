@@ -54,11 +54,11 @@ func (r *taskRepository) GetTask(taskId Domains.TaskId) (*Domains.Task, error) {
 
 func (r *taskRepository) SaveTask(task *Domains.Task) error {
 	taskModel := Models.TaskModel{
-		ID:         task.GetTaskId().GetValue(),
-		Name:       task.GetName(),
-		Deadline:   task.GetDeadline(),
-		IsFavorite: task.GetIsFavorite(),
-		IsComplete: task.GetIsComplete(),
+		ID:          task.GetTaskId().GetValue(),
+		Name:        task.GetName(),
+		Deadline:    task.GetDeadline(),
+		IsFavorite:  task.GetIsFavorite(),
+		IsCompleted: task.GetIsCompleted(),
 	}
 
 	if err := r.db.Table("tasks").Create(&taskModel).Error; err != nil {
@@ -70,11 +70,11 @@ func (r *taskRepository) SaveTask(task *Domains.Task) error {
 
 func (r *taskRepository) UpdateTask(task *Domains.Task) error {
 	taskModel := Models.TaskModel{
-		ID:         task.GetTaskId().GetValue(),
-		Name:       task.GetName(),
-		Deadline:   task.GetDeadline(),
-		IsFavorite: task.GetIsFavorite(),
-		IsComplete: task.GetIsComplete(),
+		ID:          task.GetTaskId().GetValue(),
+		Name:        task.GetName(),
+		Deadline:    task.GetDeadline(),
+		IsFavorite:  task.GetIsFavorite(),
+		IsCompleted: task.GetIsCompleted(),
 	}
 
 	if err := r.db.Table("tasks").Update(&taskModel).Error; err != nil {

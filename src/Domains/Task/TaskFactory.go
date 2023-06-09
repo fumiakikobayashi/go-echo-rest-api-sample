@@ -13,6 +13,6 @@ func CreateTask(taskModel Models.TaskModel) (*Task, error) {
 		taskModel.Name,
 		taskModel.Deadline,
 		taskModel.IsFavorite,
-		taskModel.IsComplete,
+		taskModel.IsCompleted,
 	), nil
 }

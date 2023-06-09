@@ -11,6 +11,6 @@ func CreateTaskDto(task *Domains.Task) (Dto.TaskDto, error) {
 		task.GetName(),
 		task.GetDeadline().Format(Domains.DeadlineFormat),
 		task.GetIsFavorite(),
-		task.GetIsComplete(),
+		task.GetIsCompleted(),
 	), nil
 }

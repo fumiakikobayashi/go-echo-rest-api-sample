@@ -3,31 +3,31 @@ package Domains
 import "time"
 
 type Task struct {
-	taskId     TaskId
-	name       string
-	deadline   time.Time
-	isFavorite bool
-	isComplete bool
+	taskId      TaskId
+	name        string
+	deadline    time.Time
+	isFavorite  bool
+	isCompleted bool
 }
 
 const DeadlineFormat = "2006-01-02"
 
 func CreateNewTask(name string, deadline time.Time) *Task {
 	return &Task{
-		name:       name,
-		deadline:   deadline,
-		isFavorite: false,
-		isComplete: false,
+		name:        name,
+		deadline:    deadline,
+		isFavorite:  false,
+		isCompleted: false,
 	}
 }
 
-func ReconstructTask(taskId TaskId, name string, deadline time.Time, isFavorite bool, isComplete bool) *Task {
+func ReconstructTask(taskId TaskId, name string, deadline time.Time, isFavorite bool, isCompleted bool) *Task {
 	return &Task{
-		taskId:     taskId,
-		name:       name,
-		deadline:   deadline,
-		isFavorite: isFavorite,
-		isComplete: isComplete,
+		taskId:      taskId,
+		name:        name,
+		deadline:    deadline,
+		isFavorite:  isFavorite,
+		isCompleted: isCompleted,
 	}
 }
 
@@ -41,7 +41,7 @@ func (t *Task) UpdateTaskFavorite() {
 }
 
 func (t *Task) UpdateTaskComplete() {
-	t.isComplete = !t.isComplete
+	t.isCompleted = !t.isCompleted
 }
 
 func (t *Task) GetTaskId() TaskId {
@@ -60,6 +60,6 @@ func (t *Task) GetIsFavorite() bool {
 	return t.isFavorite
 }
 
-func (t *Task) GetIsComplete() bool {
-	return t.isComplete
+func (t *Task) GetIsCompleted() bool {
+	return t.isCompleted
 }
