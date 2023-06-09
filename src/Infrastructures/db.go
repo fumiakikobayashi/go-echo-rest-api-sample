@@ -3,6 +3,7 @@ package Infrastructures
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
@@ -28,6 +29,13 @@ func Init() *gorm.DB {
 	if err != nil {
 		panic(err.Error())
 	}
+
+	// デバッグの設定
+	debugMode, err := strconv.ParseBool(os.Getenv("DB_DEBUG_MODE"))
+	if err != nil {
+		panic(err.Error())
+	}
+	db.LogMode(debugMode)
 
 	return db
 }
