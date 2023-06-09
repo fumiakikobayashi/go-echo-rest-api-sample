@@ -31,10 +31,26 @@ func NewLogger() LoggerInterface {
 	}
 }
 
+func (l *zeroLog) Debug(message string) {
+	l.logger.Debug().Msg(message)
+}
+
 func (l *zeroLog) Info(message string) {
 	l.logger.Info().Msg(message)
 }
 
+func (l *zeroLog) Warn(message string) {
+	l.logger.Warn().Msg(message)
+}
+
 func (l *zeroLog) Error(message string) {
 	l.logger.Error().Msg(message)
+}
+
+func (l *zeroLog) Fatal(message string) {
+	l.logger.Fatal().Msg(message)
+}
+
+func (l *zeroLog) Panic(message string) {
+	l.logger.Panic().Msg(message)
 }
