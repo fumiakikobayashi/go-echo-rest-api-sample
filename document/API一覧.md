@@ -3,7 +3,7 @@
 - タスク作成API
   - `POST /tasks`
 - タスク一覧取得API
-  - `GET /tasks`
+  - `GET /tasks?sort={sort_field}&order={order}`
 - タスク削除API
   - `DELETE /tasks/{task_id}`
 - タスク編集API
