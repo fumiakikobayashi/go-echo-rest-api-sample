@@ -4,6 +4,8 @@
   - `POST /tasks`
 - タスク一覧取得API
   - `GET /tasks?sort={sort_field}&order={order}`
+    - sort：name, deadline, favorite
+    - order：asc、desc
 - タスク削除API
   - `DELETE /tasks/{task_id}`
 - タスク編集API

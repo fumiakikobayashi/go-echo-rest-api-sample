@@ -6,6 +6,7 @@ hide method
 
 package タスクリスト {
     class タスク一覧 {
+        並び替え(SortType, OrderType)
     }
 
     class タスク {
@@ -14,8 +15,20 @@ package タスクリスト {
         お気に入りされているかどうか
         完了したかどうか
     }
-    note right: ・タイトルは1〜30文字
 
-    タスク - タスク一覧
+    note right: タイトルは1〜30文字
+
+    enum 並び替えの種類 {
+        タスク名
+        期限
+        お気に入り
+    }
+
+    enum 並び替えの順序 {
+        昇順
+        降順
+    }
+
+    タスク -* タスク一覧
 }
 @enduml
