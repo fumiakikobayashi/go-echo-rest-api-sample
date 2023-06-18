@@ -42,7 +42,12 @@ func NewTaskHandler(
 }
 
 func (c *TaskHandler) GetTasks(ctx echo.Context) error {
-	taskListDto, err := c.getTasksUseCase.Execute()
+	var tasksRequest Requests.GetTasksRequest
+	if err := ctx.Bind(&tasksRequest); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	taskListDto, err := c.getTasksUseCase.Execute(tasksRequest)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}

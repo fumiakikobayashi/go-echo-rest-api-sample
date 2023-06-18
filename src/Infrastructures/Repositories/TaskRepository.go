@@ -1,10 +1,12 @@
 package Repositories
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
 	"go-ddd-rest-api-sample/sdk"
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
 	"go-ddd-rest-api-sample/src/Infrastructures/Models"
+	"go-ddd-rest-api-sample/src/UseCases/Shared"
 	UseCase "go-ddd-rest-api-sample/src/UseCases/Task"
 	"time"
 )
@@ -21,11 +23,23 @@ func NewTaskRepository(db *gorm.DB, logger sdk.LoggerInterface) UseCase.TaskRepo
 	}
 }
 
-func (r *taskRepository) GetTasks() (*Domains.TaskList, error) {
+func (r *taskRepository) GetTasks(sortType Shared.SortType, sortOrder Shared.SortOrder) (*Domains.TaskList, error) {
 	var taskModels []Models.TaskModel
+	var sortColumn string
 	taskList := Domains.NewTaskList()
 
-	if err := r.db.Table("tasks").Find(&taskModels).Error; err != nil {
+	switch sortType {
+	case Shared.Name:
+		sortColumn = "name"
+	case Shared.Deadline:
+		sortColumn = "deadline"
+	case Shared.Favorite:
+		sortColumn = "is_favorite"
+	default:
+		sortColumn = "id"
+	}
+
+	if err := r.db.Table("tasks").Order(fmt.Sprintf("%s %s", sortColumn, sortOrder.GetValue())).Find(&taskModels).Error; err != nil {
 		return taskList, err
 	}
 
