@@ -1,17 +1,17 @@
 package UseCases
 
 import (
-	"go-ddd-rest-api-sample/sdk"
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
 	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
+	"go-ddd-rest-api-sample/src/Shared"
 )
 
 type UpdateTaskFavoriteUseCase struct {
 	taskRepository TaskRepositoryInterface
-	logger         sdk.LoggerInterface
+	logger         Shared.LoggerInterface
 }
 
-func NewFavoriteTaskUseCase(taskRepository TaskRepositoryInterface, logger sdk.LoggerInterface) *UpdateTaskFavoriteUseCase {
+func NewFavoriteTaskUseCase(taskRepository TaskRepositoryInterface, logger Shared.LoggerInterface) *UpdateTaskFavoriteUseCase {
 	return &UpdateTaskFavoriteUseCase{
 		taskRepository: taskRepository,
 		logger:         logger,

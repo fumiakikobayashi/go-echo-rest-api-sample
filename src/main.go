@@ -1,4 +1,4 @@
-package main
+package src
 
 import (
 	"fmt"
@@ -7,9 +7,8 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"go-ddd-rest-api-sample/sdk"
 	"go-ddd-rest-api-sample/src/Infrastructures"
-	"net/http"
+	"go-ddd-rest-api-sample/src/Shared"
 )
 
 func main() {
@@ -25,18 +24,31 @@ func main() {
 	defer func(db *gorm.DB) {
 		err := db.Close()
 		if err != nil {
-			panic("failed to disconnect database")
+			panic("DB接続の初期化に失敗しました")
 		}
 	}(db)
 
 	// ログ設定
-	logger := sdk.NewLogger()
+	logger := Shared.NewLogger()
 
 	// 依存性の注入したハンドラーを取得
 	handlers := NewHandlers(db, logger)
 
 	// echoの初期化
 	e := echo.New()
+
+	// カスタムエラーハンドラー
+	e.HTTPErrorHandler = func(err error, c echo.Context) {
+		if he, ok := err.(*echo.HTTPError); ok {
+			_ = c.JSON(he.Code, he.Message)
+		}
+		//if uce, ok := err.(UseCaseError); ok {
+		//	fmt.Println("Caught a use case error:", uce.Message)
+		//}
+		//else {
+		//	_ = c.JSON(http.StatusInternalServerError, err.Error())
+		//}
+	}
 
 	// Middleware
 	e.Use(middleware.Logger())
@@ -51,30 +63,8 @@ func main() {
 	e.PATCH("/tasks/:taskId/favorite", handlers.TaskHandler.UpdateTaskFavorite)
 	e.PATCH("/tasks/:taskId/complete", handlers.TaskHandler.UpdateTaskComplete)
 
-	// エラーハンドラー
-	e.HTTPErrorHandler = customHTTPErrorHandler
-
 	// Start server
 	if err := e.Start(":8080"); err != nil {
 		panic(err.Error())
 	}
-}
-
-func customHTTPErrorHandler(err error, c echo.Context) {
-	var code int
-	if he, ok := err.(*echo.HTTPError); ok {
-		code = he.Code
-	}
-
-	errorPage := echo.Map{}
-
-	if code == http.StatusNotFound {
-		errorPage["message"] = "該当するエンドポイントは見つかりませんでした。"
-	}
-
-	if code == http.StatusInternalServerError {
-		errorPage["message"] = "予期せぬエラーが発生しました。"
-	}
-
-	_ = c.JSON(code, errorPage)
 }

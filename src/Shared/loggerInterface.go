@@ -1,4 +1,4 @@
-package sdk
+package Shared
 
 type LoggerInterface interface {
 	Debug(message string)

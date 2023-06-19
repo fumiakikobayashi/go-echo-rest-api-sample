@@ -1,4 +1,4 @@
-package sdk
+package Shared
 
 import (
 	"github.com/rs/zerolog"
