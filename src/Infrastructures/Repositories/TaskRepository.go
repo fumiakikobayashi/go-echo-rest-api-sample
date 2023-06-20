@@ -6,7 +6,7 @@ import (
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
 	"go-ddd-rest-api-sample/src/Infrastructures/Models"
 	"go-ddd-rest-api-sample/src/Shared"
-	"go-ddd-rest-api-sample/src/UseCases/Shared"
+	uShared "go-ddd-rest-api-sample/src/UseCases/Shared"
 	UseCase "go-ddd-rest-api-sample/src/UseCases/Task"
 	"time"
 )
@@ -23,17 +23,17 @@ func NewTaskRepository(db *gorm.DB, logger Shared.LoggerInterface) UseCase.TaskR
 	}
 }
 
-func (r *taskRepository) GetTasks(sortType Shared.SortType, sortOrder Shared.SortOrder) (*Domains.TaskList, error) {
+func (r *taskRepository) GetTasks(sortType uShared.SortType, sortOrder uShared.SortOrder) (*Domains.TaskList, error) {
 	var taskModels []Models.TaskModel
 	var sortColumn string
 	taskList := Domains.NewTaskList()
 
 	switch sortType {
-	case Shared.Name:
+	case uShared.Name:
 		sortColumn = "name"
-	case Shared.Deadline:
+	case uShared.Deadline:
 		sortColumn = "deadline"
-	case Shared.Favorite:
+	case uShared.Favorite:
 		sortColumn = "is_favorite"
 	default:
 		sortColumn = "id"

@@ -5,7 +5,7 @@ import (
 	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
 	"go-ddd-rest-api-sample/src/Shared"
 	Dto "go-ddd-rest-api-sample/src/UseCases/Dto/Task"
-	"go-ddd-rest-api-sample/src/UseCases/Shared"
+	uShared "go-ddd-rest-api-sample/src/UseCases/Shared"
 )
 
 type GetTasksUseCase struct {
@@ -21,11 +21,11 @@ func NewGetTasksUseCase(taskRepository TaskRepositoryInterface, logger Shared.Lo
 }
 
 func (u *GetTasksUseCase) Execute(tasksRequest Requests.GetTasksRequest) (Dto.TaskListDto, error) {
-	sortType, err := Shared.NewSortType(tasksRequest.Sort)
+	sortType, err := uShared.NewSortType(tasksRequest.Sort)
 	if err != nil {
 		return Dto.TaskListDto{}, err
 	}
-	sortOrder, err := Shared.NewSortOrder(tasksRequest.Order)
+	sortOrder, err := uShared.NewSortOrder(tasksRequest.Order)
 	if err != nil {
 		return Dto.TaskListDto{}, err
 	}
