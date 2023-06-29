@@ -1,6 +1,8 @@
 package Shared
 
-import "fmt"
+import (
+	"go-ddd-rest-api-sample/src/Shared/Errors"
+)
 
 type SortOrder string
 
@@ -18,7 +20,7 @@ func NewSortOrder(sortOrder string) (SortOrder, error) {
 	case "":
 		return Desc, nil
 	default:
-		return "", fmt.Errorf("想定しないSortOrderが入力されました")
+		return "", Errors.New("001-001", "想定しないSortOrderが入力されました")
 	}
 }
 

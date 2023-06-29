@@ -1,6 +1,8 @@
 package Shared
 
-import "fmt"
+import (
+	"go-ddd-rest-api-sample/src/Shared/Errors"
+)
 
 type SortType string
 
@@ -22,7 +24,7 @@ func NewSortType(sortType string) (SortType, error) {
 	case "":
 		return Id, nil
 	default:
-		return "", fmt.Errorf("想定しないSortTypeが入力されました")
+		return "", Errors.New("001-001", "想定しないSortTypeが入力されました")
 	}
 }
 

@@ -1,4 +1,4 @@
-package src
+package main
 
 import (
 	"fmt"
@@ -7,15 +7,19 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"go-ddd-rest-api-sample/src"
 	"go-ddd-rest-api-sample/src/Infrastructures"
 	"go-ddd-rest-api-sample/src/Shared"
+	"go-ddd-rest-api-sample/src/Shared/Errors"
+	"go.uber.org/zap"
+	"net/http"
 )
 
 func main() {
 	// .envファイルの読み込み
 	err := godotenv.Load()
 	if err != nil {
-		fmt.Println("Error loading .env file")
+		fmt.Println("Errors loading .env file")
 		panic(err.Error())
 	}
 
@@ -32,23 +36,13 @@ func main() {
 	logger := Shared.NewLogger()
 
 	// 依存性の注入したハンドラーを取得
-	handlers := NewHandlers(db, logger)
+	handlers := src.NewHandlers(db, logger)
 
 	// echoの初期化
 	e := echo.New()
 
 	// カスタムエラーハンドラー
-	e.HTTPErrorHandler = func(err error, c echo.Context) {
-		if he, ok := err.(*echo.HTTPError); ok {
-			_ = c.JSON(he.Code, he.Message)
-		}
-		//if uce, ok := err.(UseCaseError); ok {
-		//	fmt.Println("Caught a use case error:", uce.Message)
-		//}
-		//else {
-		//	_ = c.JSON(http.StatusInternalServerError, err.Error())
-		//}
-	}
+	e.HTTPErrorHandler = customHTTPErrorHandler
 
 	// Middleware
 	e.Use(middleware.Logger())
@@ -66,5 +60,36 @@ func main() {
 	// Start server
 	if err := e.Start(":8080"); err != nil {
 		panic(err.Error())
+	}
+}
+
+func customHTTPErrorHandler(err error, c echo.Context) {
+	he, ok := err.(*echo.HTTPError)
+	if !ok {
+		zap.S().Errorf("Unknown error: %v", err)
+		c.JSON(http.StatusInternalServerError, err)
+		return
+	}
+
+	httpCode := he.Code
+	switch err := he.Message.(type) {
+	case error:
+		switch {
+		case httpCode >= 500:
+			zap.S().Errorf("Server error: %v", err)
+			if me, ok := err.(*Errors.MyError); ok {
+				fmt.Print(me.StackTrace)
+			}
+		case httpCode >= 400:
+			zap.S().Infof("Client error: %v", err)
+		}
+		c.JSON(httpCode, "error")
+	case string:
+		// 存在しないエンドポイントが叩かれた場合
+		zap.S().Errorf("Echo HTTP error: %v", he)
+		c.JSON(http.StatusInternalServerError, he)
+	default:
+		zap.S().Errorf("Unknown HTTP error: %v", he)
+		c.JSON(http.StatusInternalServerError, "予期せぬエラーが発生しました")
 	}
 }

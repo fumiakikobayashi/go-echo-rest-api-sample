@@ -1,7 +1,6 @@
 package UseCases
 
 import (
-	"fmt"
 	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
 	"go-ddd-rest-api-sample/src/Shared"
 	Dto "go-ddd-rest-api-sample/src/UseCases/Dto/Task"
@@ -32,12 +31,8 @@ func (u *GetTasksUseCase) Execute(tasksRequest Requests.GetTasksRequest) (Dto.Ta
 
 	taskList, err := u.taskRepository.GetTasks(sortType, sortOrder)
 	if err != nil {
-		return Dto.TaskListDto{}, fmt.Errorf("タスク一覧の取得に失敗しました")
+		return Dto.TaskListDto{}, err
 	}
 
-	taskListDto, err := CreateTaskDtoList(taskList)
-	if err != nil {
-		return Dto.TaskListDto{}, fmt.Errorf("DTOの作成に失敗しました")
-	}
-	return taskListDto, nil
+	return CreateTaskDtoList(taskList), nil
 }

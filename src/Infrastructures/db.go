@@ -25,6 +25,7 @@ func Init() *gorm.DB {
 		port,
 		dbname,
 	)
+	fmt.Println(conn)
 	db, err := gorm.Open("mysql", conn)
 	if err != nil {
 		panic(err.Error())

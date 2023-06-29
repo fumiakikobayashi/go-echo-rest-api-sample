@@ -1,10 +1,10 @@
 package UseCases
 
 import (
-	"fmt"
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
 	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
 	"go-ddd-rest-api-sample/src/Shared"
+	"go-ddd-rest-api-sample/src/Shared/Errors"
 	"time"
 )
 
@@ -21,20 +21,23 @@ func NewUpdateTaskUseCase(taskRepository TaskRepositoryInterface, logger Shared.
 }
 
 func (u *UpdateTaskUseCase) Execute(request Requests.UpdateTaskRequest) error {
-	taskId, _ := Domains.NewTaskId(request.TaskId)
+	taskId, err := Domains.NewTaskId(request.TaskId)
+	if err != nil {
+		return err
+	}
 	task, err := u.taskRepository.GetTask(taskId)
 	if err != nil {
-		return fmt.Errorf("タスクの取得に失敗しました")
+		return err
 	}
 
 	t, err := time.Parse(Domains.DeadlineFormat, request.Deadline)
 	if err != nil {
-		return fmt.Errorf("締切日のフォーマットが不正です")
+		return Errors.New("001-001", "締切日のフォーマットが不正です")
 	}
 	task.UpdateTask(request.Name, t)
 
 	if err := u.taskRepository.UpdateTask(task); err != nil {
-		return fmt.Errorf("タスクの更新に失敗しました")
+		return err
 	}
 	return nil
 }

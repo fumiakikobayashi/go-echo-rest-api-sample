@@ -49,7 +49,7 @@ func (c *TaskHandler) GetTasks(ctx echo.Context) error {
 
 	taskListDto, err := c.getTasksUseCase.Execute(tasksRequest)
 	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		return err
 	}
 
 	return ctx.JSON(http.StatusOK, taskListDto)

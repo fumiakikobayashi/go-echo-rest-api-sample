@@ -1,7 +1,6 @@
 package UseCases
 
 import (
-	"fmt"
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
 	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
 	"go-ddd-rest-api-sample/src/Shared"
@@ -21,15 +20,14 @@ func NewGetTaskUseCase(taskRepository TaskRepositoryInterface, logger Shared.Log
 }
 
 func (u *GetTaskUseCase) Execute(request Requests.GetTaskRequest) (Dto.TaskDto, error) {
-	taskId, _ := Domains.NewTaskId(request.TaskId)
+	taskId, err := Domains.NewTaskId(request.TaskId)
+	if err != nil {
+		return Dto.TaskDto{}, err
+	}
 	task, err := u.taskRepository.GetTask(taskId)
 	if err != nil {
-		return Dto.TaskDto{}, fmt.Errorf("タスクの取得に失敗しました")
+		return Dto.TaskDto{}, err
 	}
 
-	taskDto, err := CreateTaskDto(task)
-	if err != nil {
-		return Dto.TaskDto{}, fmt.Errorf("タスクDTOの生成に失敗しました")
-	}
-	return taskDto, nil
+	return CreateTaskDto(task), nil
 }

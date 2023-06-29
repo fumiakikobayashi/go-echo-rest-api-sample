@@ -6,6 +6,7 @@ import (
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
 	"go-ddd-rest-api-sample/src/Infrastructures/Models"
 	"go-ddd-rest-api-sample/src/Shared"
+	"go-ddd-rest-api-sample/src/Shared/Errors"
 	uShared "go-ddd-rest-api-sample/src/UseCases/Shared"
 	UseCase "go-ddd-rest-api-sample/src/UseCases/Task"
 	"time"
@@ -46,7 +47,7 @@ func (r *taskRepository) GetTasks(sortType uShared.SortType, sortOrder uShared.S
 	for _, taskModel := range taskModels {
 		task, _ := Domains.CreateTask(taskModel)
 		if err := taskList.Push(task); err != nil {
-			return taskList, err
+			return taskList, Errors.New("001-001", "doSomethingでエラー発生")
 		}
 	}
 
@@ -57,7 +58,7 @@ func (r *taskRepository) GetTask(taskId Domains.TaskId) (*Domains.Task, error) {
 	var taskModel Models.TaskModel
 
 	if err := r.db.Table("tasks").First(&taskModel, taskId.GetValue()).Error; err != nil {
-		return &Domains.Task{}, err
+		return &Domains.Task{}, Errors.New("001-001", "タスクの取得に失敗しました")
 	}
 
 	task, err := Domains.CreateTask(taskModel)
@@ -78,7 +79,7 @@ func (r *taskRepository) SaveTask(task *Domains.Task) error {
 		IsFavorite:  &isFavorite,
 		IsCompleted: &isCompleted,
 	}).Error; err != nil {
-		return err
+		return Errors.New("001-001", "doSomethingでエラー発生")
 	}
 
 	return nil
@@ -97,7 +98,7 @@ func (r *taskRepository) UpdateTask(task *Domains.Task) error {
 		IsCompleted: &isCompleted,
 		UpdatedAt:   time.Now(),
 	}).Error; err != nil {
-		return err
+		return Errors.New("001-001", "doSomethingでエラー発生")
 	}
 
 	return nil
@@ -107,7 +108,7 @@ func (r *taskRepository) DeleteTask(taskId Domains.TaskId) error {
 	var taskModel Models.TaskModel
 
 	if err := r.db.Table("tasks").Where("id = ?", taskId.GetValue()).Delete(&taskModel).Error; err != nil {
-		return err
+		return Errors.New("001-001", "doSomethingでエラー発生")
 	}
 
 	return nil
