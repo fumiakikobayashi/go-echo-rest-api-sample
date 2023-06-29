@@ -1,4 +1,4 @@
-package Errors
+package Shared
 
 import (
 	"fmt"

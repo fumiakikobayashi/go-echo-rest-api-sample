@@ -4,7 +4,6 @@ import (
 	Domains "go-ddd-rest-api-sample/src/Domains/Task"
 	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
 	"go-ddd-rest-api-sample/src/Shared"
-	"go-ddd-rest-api-sample/src/Shared/Errors"
 )
 
 type DeleteTaskUseCase struct {
@@ -30,7 +29,7 @@ func (u *DeleteTaskUseCase) Execute(request Requests.DeleteTaskRequest) error {
 		return err
 	}
 	if task == nil {
-		return Errors.New("001-001", "指定されたタスクが存在しません")
+		return Shared.New("001-001", "指定されたタスクが存在しません")
 	}
 
 	if err := u.taskRepository.DeleteTask(taskId); err != nil {

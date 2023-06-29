@@ -1,7 +1,7 @@
 package Shared
 
 import (
-	"go-ddd-rest-api-sample/src/Shared/Errors"
+	"go-ddd-rest-api-sample/src/Shared"
 )
 
 type SortType string
@@ -24,7 +24,7 @@ func NewSortType(sortType string) (SortType, error) {
 	case "":
 		return Id, nil
 	default:
-		return "", Errors.New("001-001", "想定しないSortTypeが入力されました")
+		return "", Shared.New("001-001", "想定しないSortTypeが入力されました")
 	}
 }
 

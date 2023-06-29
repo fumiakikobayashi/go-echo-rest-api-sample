@@ -1,7 +1,7 @@
 package Domains
 
 import (
-	"go-ddd-rest-api-sample/src/Shared/Errors"
+	"go-ddd-rest-api-sample/src/Shared"
 )
 
 type TaskId struct {
@@ -12,7 +12,7 @@ const MIN = 1
 
 func NewTaskId(id int) (TaskId, error) {
 	if id < MIN {
-		return TaskId{}, Errors.New("001-001", "タスクIDは0以上の値を指定してください")
+		return TaskId{}, Shared.New("001-001", "タスクIDは0以上の値を指定してください")
 	}
 	return TaskId{
 		id: id,

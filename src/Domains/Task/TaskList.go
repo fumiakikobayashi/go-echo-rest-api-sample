@@ -1,7 +1,7 @@
 package Domains
 
 import (
-	"go-ddd-rest-api-sample/src/Shared/Errors"
+	"go-ddd-rest-api-sample/src/Shared"
 )
 
 type TaskList struct {
@@ -16,7 +16,7 @@ func NewTaskList() *TaskList {
 
 func (t *TaskList) Push(task *Task) error {
 	if _, ok := t.taskList[task.GetTaskId()]; ok {
-		return Errors.New("001-001", "すでに存在しているtaskIdをpushしようとしています。")
+		return Shared.New("001-001", "すでに存在しているtaskIdをpushしようとしています。")
 	}
 	t.taskList[task.GetTaskId()] = task
 	return nil

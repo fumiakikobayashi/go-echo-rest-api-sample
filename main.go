@@ -10,7 +10,6 @@ import (
 	"go-ddd-rest-api-sample/src"
 	"go-ddd-rest-api-sample/src/Infrastructures"
 	"go-ddd-rest-api-sample/src/Shared"
-	"go-ddd-rest-api-sample/src/Shared/Errors"
 	"go.uber.org/zap"
 	"net/http"
 )
@@ -77,7 +76,7 @@ func customHTTPErrorHandler(err error, c echo.Context) {
 		switch {
 		case httpCode >= 500:
 			zap.S().Errorf("Server error: %v", err)
-			if me, ok := err.(*Errors.MyError); ok {
+			if me, ok := err.(*Shared.MyError); ok {
 				fmt.Print(me.StackTrace)
 			}
 		case httpCode >= 400:

@@ -1,7 +1,7 @@
 package Shared
 
 import (
-	"go-ddd-rest-api-sample/src/Shared/Errors"
+	"go-ddd-rest-api-sample/src/Shared"
 )
 
 type SortOrder string
@@ -20,7 +20,7 @@ func NewSortOrder(sortOrder string) (SortOrder, error) {
 	case "":
 		return Desc, nil
 	default:
-		return "", Errors.New("001-001", "想定しないSortOrderが入力されました")
+		return "", Shared.New("001-001", "想定しないSortOrderが入力されました")
 	}
 }
 
