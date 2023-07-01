@@ -8,7 +8,7 @@ import (
 func CreateTask(taskModel Models.TaskModel) (*Task, error) {
 	id, err := NewTaskId(taskModel.ID)
 	if err != nil {
-		return &Task{}, Shared.New("001-001", "タスクIDの生成に失敗しました")
+		return &Task{}, Shared.NewSampleError("001-001", "タスクIDの生成に失敗しました")
 	}
 
 	return ReconstructTask(

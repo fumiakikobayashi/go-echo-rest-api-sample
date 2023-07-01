@@ -76,7 +76,7 @@ func customHTTPErrorHandler(err error, c echo.Context) {
 		switch {
 		case httpCode >= 500:
 			zap.S().Errorf("Server error: %v", err)
-			if me, ok := err.(*Shared.MyError); ok {
+			if me, ok := err.(*Shared.SampleError); ok {
 				fmt.Print(me.StackTrace)
 			}
 		case httpCode >= 400:

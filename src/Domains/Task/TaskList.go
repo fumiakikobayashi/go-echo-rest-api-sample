@@ -16,7 +16,7 @@ func NewTaskList() *TaskList {
 
 func (t *TaskList) Push(task *Task) error {
 	if _, ok := t.taskList[task.GetTaskId()]; ok {
-		return Shared.New("001-001", "すでに存在しているtaskIdをpushしようとしています。")
+		return Shared.NewSampleError("001-001", "すでに存在しているtaskIdをpushしようとしています。")
 	}
 	t.taskList[task.GetTaskId()] = task
 	return nil

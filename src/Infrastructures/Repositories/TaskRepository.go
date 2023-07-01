@@ -46,7 +46,7 @@ func (r *taskRepository) GetTasks(sortType uShared.SortType, sortOrder uShared.S
 	for _, taskModel := range taskModels {
 		task, _ := Domains.CreateTask(taskModel)
 		if err := taskList.Push(task); err != nil {
-			return taskList, Shared.New("001-001", "doSomethingでエラー発生")
+			return taskList, Shared.NewSampleError("001-001", "doSomethingでエラー発生")
 		}
 	}
 
@@ -57,7 +57,7 @@ func (r *taskRepository) GetTask(taskId Domains.TaskId) (*Domains.Task, error) {
 	var taskModel Models.TaskModel
 
 	if err := r.db.Table("tasks").First(&taskModel, taskId.GetValue()).Error; err != nil {
-		return &Domains.Task{}, Shared.New("001-001", "タスクの取得に失敗しました")
+		return &Domains.Task{}, Shared.NewSampleError("001-001", "タスクの取得に失敗しました")
 	}
 
 	task, err := Domains.CreateTask(taskModel)
@@ -78,7 +78,7 @@ func (r *taskRepository) SaveTask(task *Domains.Task) error {
 		IsFavorite:  &isFavorite,
 		IsCompleted: &isCompleted,
 	}).Error; err != nil {
-		return Shared.New("001-001", "doSomethingでエラー発生")
+		return Shared.NewSampleError("001-001", "doSomethingでエラー発生")
 	}
 
 	return nil
@@ -97,7 +97,7 @@ func (r *taskRepository) UpdateTask(task *Domains.Task) error {
 		IsCompleted: &isCompleted,
 		UpdatedAt:   time.Now(),
 	}).Error; err != nil {
-		return Shared.New("001-001", "doSomethingでエラー発生")
+		return Shared.NewSampleError("001-001", "doSomethingでエラー発生")
 	}
 
 	return nil
@@ -107,7 +107,7 @@ func (r *taskRepository) DeleteTask(taskId Domains.TaskId) error {
 	var taskModel Models.TaskModel
 
 	if err := r.db.Table("tasks").Where("id = ?", taskId.GetValue()).Delete(&taskModel).Error; err != nil {
-		return Shared.New("001-001", "doSomethingでエラー発生")
+		return Shared.NewSampleError("001-001", "doSomethingでエラー発生")
 	}
 
 	return nil

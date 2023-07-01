@@ -20,7 +20,7 @@ func NewSortOrder(sortOrder string) (SortOrder, error) {
 	case "":
 		return Desc, nil
 	default:
-		return "", Shared.New("001-001", "想定しないSortOrderが入力されました")
+		return "", Shared.NewSampleError("001-001", "想定しないSortOrderが入力されました")
 	}
 }
 

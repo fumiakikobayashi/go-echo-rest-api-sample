@@ -29,7 +29,7 @@ func (u *DeleteTaskUseCase) Execute(request Requests.DeleteTaskRequest) error {
 		return err
 	}
 	if task == nil {
-		return Shared.New("001-001", "指定されたタスクが存在しません")
+		return Shared.NewSampleError("001-001", "指定されたタスクが存在しません")
 	}
 
 	if err := u.taskRepository.DeleteTask(taskId); err != nil {

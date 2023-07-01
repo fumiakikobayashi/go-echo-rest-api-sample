@@ -31,7 +31,7 @@ func (u *UpdateTaskUseCase) Execute(request Requests.UpdateTaskRequest) error {
 
 	t, err := time.Parse(Domains.DeadlineFormat, request.Deadline)
 	if err != nil {
-		return Shared.New("001-001", "締切日のフォーマットが不正です")
+		return Shared.NewSampleError("001-001", "締切日のフォーマットが不正です")
 	}
 	task.UpdateTask(request.Name, t)
 

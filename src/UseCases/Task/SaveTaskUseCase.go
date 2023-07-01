@@ -22,7 +22,7 @@ func NewSaveTaskUseCase(taskRepository TaskRepositoryInterface, logger Shared.Lo
 func (u *SaveTaskUseCase) Execute(request Requests.SaveTaskRequest) error {
 	t, err := time.Parse(Domains.DeadlineFormat, request.Deadline)
 	if err != nil {
-		return Shared.New("001-001", "締切日のフォーマットが不正です")
+		return Shared.NewSampleError("001-001", "締切日のフォーマットが不正です")
 	}
 
 	task := Domains.CreateNewTask(request.Name, t)

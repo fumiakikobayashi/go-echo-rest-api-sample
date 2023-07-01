@@ -12,7 +12,7 @@ const MIN = 1
 
 func NewTaskId(id int) (TaskId, error) {
 	if id < MIN {
-		return TaskId{}, Shared.New("001-001", "タスクIDは0以上の値を指定してください")
+		return TaskId{}, Shared.NewSampleError("001-001", "タスクIDは0以上の値を指定してください")
 	}
 	return TaskId{
 		id: id,

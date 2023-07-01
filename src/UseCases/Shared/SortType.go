@@ -24,7 +24,7 @@ func NewSortType(sortType string) (SortType, error) {
 	case "":
 		return Id, nil
 	default:
-		return "", Shared.New("001-001", "想定しないSortTypeが入力されました")
+		return "", Shared.NewSampleError("001-001", "想定しないSortTypeが入力されました")
 	}
 }
 

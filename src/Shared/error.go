@@ -1,23 +1,22 @@
 package Shared
 
 import (
-	"fmt"
 	"go.uber.org/zap"
 )
 
-type MyError struct {
+type SampleError struct {
 	Code       string
 	Message    string
 	StackTrace string
 }
 
-func (me *MyError) Error() string {
-	return fmt.Sprintf("my error: code[%s], message[%s]", me.Code, me.Message)
+func (me *SampleError) Error() string {
+	return me.Message
 }
 
-func New(code string, message string) *MyError {
+func NewSampleError(code string, message string) *SampleError {
 	stack := zap.Stack("").String
-	return &MyError{
+	return &SampleError{
 		Code:       code,
 		Message:    message,
 		StackTrace: stack,
