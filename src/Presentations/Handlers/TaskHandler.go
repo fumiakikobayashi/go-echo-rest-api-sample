@@ -27,7 +27,7 @@ func NewTaskHandler(
 	deleteTaskUseCase *UseCase.DeleteTaskUseCase,
 	updateFavoriteTaskUseCase *UseCase.UpdateTaskFavoriteUseCase,
 	updateCompleteTaskUseCase *UseCase.UpdateTaskCompleteUseCase,
-	logger Shared.LoggerInterface,
+	logger *Shared.LoggerInterface,
 ) *TaskHandler {
 	return &TaskHandler{
 		getTasksUseCase:           *getTasksUseCase,
@@ -37,7 +37,7 @@ func NewTaskHandler(
 		deleteTaskUseCase:         *deleteTaskUseCase,
 		updateFavoriteTaskUseCase: *updateFavoriteTaskUseCase,
 		updateCompleteTaskUseCase: *updateCompleteTaskUseCase,
-		logger:                    logger,
+		logger:                    *logger,
 	}
 }
 

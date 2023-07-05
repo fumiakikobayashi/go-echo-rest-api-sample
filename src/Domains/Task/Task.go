@@ -1,6 +1,8 @@
 package Domains
 
-import "time"
+import (
+	"time"
+)
 
 type Task struct {
 	taskId      TaskId
@@ -12,13 +14,13 @@ type Task struct {
 
 const DeadlineFormat = "2006-01-02"
 
-func CreateNewTask(name string, deadline time.Time) *Task {
+func CreateNewTask(name string, deadline time.Time) (*Task, error) {
 	return &Task{
 		name:        name,
 		deadline:    deadline,
 		isFavorite:  false,
 		isCompleted: false,
-	}
+	}, nil
 }
 
 func ReconstructTask(taskId TaskId, name string, deadline time.Time, isFavorite bool, isCompleted bool) *Task {

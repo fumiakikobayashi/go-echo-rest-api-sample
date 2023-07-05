@@ -12,10 +12,10 @@ type SaveTaskUseCase struct {
 	logger         Shared.LoggerInterface
 }
 
-func NewSaveTaskUseCase(taskRepository TaskRepositoryInterface, logger Shared.LoggerInterface) *SaveTaskUseCase {
+func NewSaveTaskUseCase(taskRepository TaskRepositoryInterface, logger *Shared.LoggerInterface) *SaveTaskUseCase {
 	return &SaveTaskUseCase{
 		taskRepository: taskRepository,
-		logger:         logger,
+		logger:         *logger,
 	}
 }
 
@@ -25,7 +25,10 @@ func (u *SaveTaskUseCase) Execute(request Requests.SaveTaskRequest) error {
 		return Shared.NewSampleError("001-001", "締切日のフォーマットが不正です")
 	}
 
-	task := Domains.CreateNewTask(request.Name, t)
+	task, err := Domains.CreateNewTask(request.Name, t)
+	if err != nil {
+		return err
+	}
 	if err := u.taskRepository.SaveTask(task); err != nil {
 		return err
 	}

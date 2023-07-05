@@ -8,10 +8,10 @@ import (
 
 type UpdateTaskCompleteUseCase struct {
 	taskRepository TaskRepositoryInterface
-	logger         Shared.LoggerInterface
+	logger         *Shared.LoggerInterface
 }
 
-func NewUpdateTaskCompleteUseCase(taskRepository TaskRepositoryInterface, logger Shared.LoggerInterface) *UpdateTaskCompleteUseCase {
+func NewUpdateTaskCompleteUseCase(taskRepository TaskRepositoryInterface, logger *Shared.LoggerInterface) *UpdateTaskCompleteUseCase {
 	return &UpdateTaskCompleteUseCase{
 		taskRepository: taskRepository,
 		logger:         logger,

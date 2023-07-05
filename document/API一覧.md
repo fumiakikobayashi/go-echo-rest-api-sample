@@ -14,3 +14,5 @@
   - `PATCH /tasks/{task_id}/favorite`
 - タスク完了状態設定API
   - `PATCH /tasks/{task_id}/complete`
+- 提案タスク取得API
+  - `GET /tasks/suggestion`

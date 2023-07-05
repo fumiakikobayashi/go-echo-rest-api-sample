@@ -8,10 +8,10 @@ import (
 
 type DeleteTaskUseCase struct {
 	taskRepository TaskRepositoryInterface
-	logger         Shared.LoggerInterface
+	logger         *Shared.LoggerInterface
 }
 
-func NewDeleteTaskUseCase(taskRepository TaskRepositoryInterface, logger Shared.LoggerInterface) *DeleteTaskUseCase {
+func NewDeleteTaskUseCase(taskRepository TaskRepositoryInterface, logger *Shared.LoggerInterface) *DeleteTaskUseCase {
 	return &DeleteTaskUseCase{
 		taskRepository: taskRepository,
 		logger:         logger,

@@ -7,11 +7,13 @@ import (
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/sashabaranov/go-openai"
 	"go-ddd-rest-api-sample/src"
 	"go-ddd-rest-api-sample/src/Infrastructures"
 	"go-ddd-rest-api-sample/src/Shared"
 	"go.uber.org/zap"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -34,8 +36,11 @@ func main() {
 	// ログ設定
 	logger := Shared.NewLogger()
 
+	// OpenAIのクライアント
+	client := openai.NewClient(os.Getenv("OPENAI_API_KEY"))
+
 	// 依存性の注入したハンドラーを取得
-	handlers := src.NewHandlers(db, logger)
+	handlers := src.NewHandlers(db, &logger, client)
 
 	// echoの初期化
 	e := echo.New()
@@ -55,6 +60,7 @@ func main() {
 	e.DELETE("/tasks/:taskId", handlers.TaskHandler.DeleteTask)
 	e.PATCH("/tasks/:taskId/favorite", handlers.TaskHandler.UpdateTaskFavorite)
 	e.PATCH("/tasks/:taskId/complete", handlers.TaskHandler.UpdateTaskComplete)
+	e.GET("/tasks/suggestion", handlers.SuggestedTaskHandler.GetSuggestedTasks)
 
 	// Start server
 	if err := e.Start(":8080"); err != nil {
@@ -80,7 +86,7 @@ func customHTTPErrorHandler(err error, c echo.Context) {
 				fmt.Print(me.StackTrace)
 			}
 		case httpCode >= 400:
-			zap.S().Infof("Client error: %v", err)
+			zap.S().Infof("Clients error: %v", err)
 		}
 		c.JSON(httpCode, "error")
 	case string:

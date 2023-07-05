@@ -9,10 +9,10 @@ import (
 
 type GetTasksUseCase struct {
 	taskRepository TaskRepositoryInterface
-	logger         Shared.LoggerInterface
+	logger         *Shared.LoggerInterface
 }
 
-func NewGetTasksUseCase(taskRepository TaskRepositoryInterface, logger Shared.LoggerInterface) *GetTasksUseCase {
+func NewGetTasksUseCase(taskRepository TaskRepositoryInterface, logger *Shared.LoggerInterface) *GetTasksUseCase {
 	return &GetTasksUseCase{
 		taskRepository: taskRepository,
 		logger:         logger,

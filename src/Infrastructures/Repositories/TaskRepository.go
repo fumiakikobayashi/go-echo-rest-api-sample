@@ -13,10 +13,10 @@ import (
 
 type taskRepository struct {
 	db     *gorm.DB
-	logger Shared.LoggerInterface
+	logger *Shared.LoggerInterface
 }
 
-func NewTaskRepository(db *gorm.DB, logger Shared.LoggerInterface) UseCase.TaskRepositoryInterface {
+func NewTaskRepository(db *gorm.DB, logger *Shared.LoggerInterface) UseCase.TaskRepositoryInterface {
 	return &taskRepository{
 		db:     db,
 		logger: logger,

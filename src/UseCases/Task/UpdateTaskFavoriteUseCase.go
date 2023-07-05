@@ -8,10 +8,10 @@ import (
 
 type UpdateTaskFavoriteUseCase struct {
 	taskRepository TaskRepositoryInterface
-	logger         Shared.LoggerInterface
+	logger         *Shared.LoggerInterface
 }
 
-func NewFavoriteTaskUseCase(taskRepository TaskRepositoryInterface, logger Shared.LoggerInterface) *UpdateTaskFavoriteUseCase {
+func NewFavoriteTaskUseCase(taskRepository TaskRepositoryInterface, logger *Shared.LoggerInterface) *UpdateTaskFavoriteUseCase {
 	return &UpdateTaskFavoriteUseCase{
 		taskRepository: taskRepository,
 		logger:         logger,

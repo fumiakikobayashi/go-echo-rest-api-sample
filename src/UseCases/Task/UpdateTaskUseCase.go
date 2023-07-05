@@ -12,10 +12,10 @@ type UpdateTaskUseCase struct {
 	logger         Shared.LoggerInterface
 }
 
-func NewUpdateTaskUseCase(taskRepository TaskRepositoryInterface, logger Shared.LoggerInterface) *UpdateTaskUseCase {
+func NewUpdateTaskUseCase(taskRepository TaskRepositoryInterface, logger *Shared.LoggerInterface) *UpdateTaskUseCase {
 	return &UpdateTaskUseCase{
 		taskRepository: taskRepository,
-		logger:         logger,
+		logger:         *logger,
 	}
 }
 

@@ -5,10 +5,6 @@ hide circle
 hide method
 
 package タスクリスト {
-    class タスク一覧 {
-        並び替え(SortType, OrderType)
-    }
-
     class タスク {
         タスク名
         期限
@@ -17,6 +13,9 @@ package タスクリスト {
     }
 
     note right: タイトルは1〜30文字
+
+    class 提案タスク {
+    }
 
     enum 並び替えの種類 {
         タスク名
@@ -29,6 +28,6 @@ package タスクリスト {
         降順
     }
 
-    タスク -* タスク一覧
+    タスク -o 提案タスク
 }
 @enduml
