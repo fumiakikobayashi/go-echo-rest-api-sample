@@ -18,17 +18,14 @@ import (
 
 func main() {
 	// .envファイルの読み込み
-	err := godotenv.Load()
-	if err != nil {
-		fmt.Println("Errors loading .env file")
-		panic(err.Error())
+	if err := godotenv.Load(); err != nil {
+		panic("Envファイルの読み込みに失敗しました")
 	}
 
 	// DB接続
 	db := Infrastructures.Init()
 	defer func(db *gorm.DB) {
-		err := db.Close()
-		if err != nil {
+		if err := db.Close(); err != nil {
 			panic("DB接続の初期化に失敗しました")
 		}
 	}(db)
