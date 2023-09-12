@@ -1,6 +1,6 @@
-module go-ddd-rest-api-sample
+module go-echo-rest-api-sample
 
-go 1.20
+go 1.21
 
 require (
 	github.com/go-sql-driver/mysql v1.7.1
