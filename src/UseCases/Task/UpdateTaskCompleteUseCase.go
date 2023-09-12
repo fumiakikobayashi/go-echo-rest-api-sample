@@ -1,9 +1,9 @@
 package UseCases
 
 import (
-	Domains "go-ddd-rest-api-sample/src/Domains/Task"
-	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
-	"go-ddd-rest-api-sample/src/Shared"
+	Domains "go-echo-rest-api-sample/src/Domains/Task"
+	Requests "go-echo-rest-api-sample/src/Presentations/Requests/Task"
+	"go-echo-rest-api-sample/src/Shared"
 )
 
 type UpdateTaskCompleteUseCase struct {

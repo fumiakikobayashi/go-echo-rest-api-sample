@@ -6,8 +6,8 @@
 
 はじめにリポジトリをクローンして、対象のディレクトリに移動します
 ```
-$ git clone https://github.com/fumiakikobayashi/go-ddd-rest-api-sample.git
-$ cd go-ddd-rest-api-sample
+$ git clone https://github.com/fumiakikobayashi/go-echo-rest-api-sample.git
+$ cd go-echo-rest-api-sample
 ```
 下記コマンドを実行してコンテナを立ち上げてください。（`make`コマンドを使用することで、`Makefile`に定義しているコマンドを実行することができます。）
 
@@ -20,9 +20,9 @@ $ make up
 ```
 $ make ps
 NAME                           COMMAND                  SERVICE             STATUS              PORTS
-go-ddd-rest-api-sample-app-1   "go run ."               app                 running             0.0.0.0:8080->8080/tcp
-go-ddd-rest-api-sample-db-1    "docker-entrypoint.s…"   db                  running             0.0.0.0:3306->3306/tcp
-go-ddd-rest-api-sample-pma-1   "/docker-entrypoint.…"   pma                 running             0.0.0.0:8088->80/tcp
+go-echo-rest-api-sample-app-1   "go run ."               app                 running             0.0.0.0:8080->8080/tcp
+go-echo-rest-api-sample-db-1    "docker-entrypoint.s…"   db                  running             0.0.0.0:3306->3306/tcp
+go-echo-rest-api-sample-pma-1   "/docker-entrypoint.…"   pma                 running             0.0.0.0:8088->80/tcp
 ```
 これで環境の構築は完了です。
 

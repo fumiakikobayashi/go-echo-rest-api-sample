@@ -1,7 +1,7 @@
 package Domains
 
 import (
-	"go-ddd-rest-api-sample/src/Shared"
+	"go-echo-rest-api-sample/src/Shared"
 )
 
 type TaskId struct {

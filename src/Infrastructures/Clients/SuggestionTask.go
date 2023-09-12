@@ -3,8 +3,8 @@ package Infrastructures
 import (
 	"context"
 	"github.com/sashabaranov/go-openai"
-	Domain "go-ddd-rest-api-sample/src/Domains/SuggestedTask"
-	"go-ddd-rest-api-sample/src/Shared"
+	Domain "go-echo-rest-api-sample/src/Domains/SuggestedTask"
+	"go-echo-rest-api-sample/src/Shared"
 	"strings"
 )
 

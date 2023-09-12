@@ -2,9 +2,9 @@ package Handlers
 
 import (
 	"github.com/labstack/echo/v4"
-	Requests2 "go-ddd-rest-api-sample/src/Presentations/Requests/SuggestedTask"
-	"go-ddd-rest-api-sample/src/Shared"
-	UseCases "go-ddd-rest-api-sample/src/UseCases/SuggestedTask"
+	Requests2 "go-echo-rest-api-sample/src/Presentations/Requests/SuggestedTask"
+	"go-echo-rest-api-sample/src/Shared"
+	UseCases "go-echo-rest-api-sample/src/UseCases/SuggestedTask"
 	"net/http"
 )
 

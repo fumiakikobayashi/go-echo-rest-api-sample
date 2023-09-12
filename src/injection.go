@@ -3,12 +3,12 @@ package src
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/sashabaranov/go-openai"
-	Infrastructures "go-ddd-rest-api-sample/src/Infrastructures/Clients"
-	"go-ddd-rest-api-sample/src/Infrastructures/Repositories"
-	Presentations "go-ddd-rest-api-sample/src/Presentations/Handlers"
-	"go-ddd-rest-api-sample/src/Shared"
-	UseCases2 "go-ddd-rest-api-sample/src/UseCases/SuggestedTask"
-	UseCases "go-ddd-rest-api-sample/src/UseCases/Task"
+	Infrastructures "go-echo-rest-api-sample/src/Infrastructures/Clients"
+	"go-echo-rest-api-sample/src/Infrastructures/Repositories"
+	Presentations "go-echo-rest-api-sample/src/Presentations/Handlers"
+	"go-echo-rest-api-sample/src/Shared"
+	UseCases2 "go-echo-rest-api-sample/src/UseCases/SuggestedTask"
+	UseCases "go-echo-rest-api-sample/src/UseCases/Task"
 )
 
 type Handlers struct {

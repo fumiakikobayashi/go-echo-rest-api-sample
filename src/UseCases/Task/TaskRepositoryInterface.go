@@ -1,8 +1,8 @@
 package UseCases
 
 import (
-	Domains "go-ddd-rest-api-sample/src/Domains/Task"
-	"go-ddd-rest-api-sample/src/UseCases/Shared"
+	Domains "go-echo-rest-api-sample/src/Domains/Task"
+	"go-echo-rest-api-sample/src/UseCases/Shared"
 )
 
 type TaskRepositoryInterface interface {

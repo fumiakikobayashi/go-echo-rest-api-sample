@@ -1,8 +1,8 @@
 package UseCases
 
 import (
-	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/SuggestedTask"
-	Dto "go-ddd-rest-api-sample/src/UseCases/Dto/SuggestedTask"
+	Requests "go-echo-rest-api-sample/src/Presentations/Requests/SuggestedTask"
+	Dto "go-echo-rest-api-sample/src/UseCases/Dto/SuggestedTask"
 )
 
 type GetSuggestedTasksUseCase struct {

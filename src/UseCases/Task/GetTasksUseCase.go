@@ -1,10 +1,10 @@
 package UseCases
 
 import (
-	Requests "go-ddd-rest-api-sample/src/Presentations/Requests/Task"
-	"go-ddd-rest-api-sample/src/Shared"
-	Dto "go-ddd-rest-api-sample/src/UseCases/Dto/Task"
-	uShared "go-ddd-rest-api-sample/src/UseCases/Shared"
+	Requests "go-echo-rest-api-sample/src/Presentations/Requests/Task"
+	"go-echo-rest-api-sample/src/Shared"
+	Dto "go-echo-rest-api-sample/src/UseCases/Dto/Task"
+	uShared "go-echo-rest-api-sample/src/UseCases/Shared"
 )
 
 type GetTasksUseCase struct {

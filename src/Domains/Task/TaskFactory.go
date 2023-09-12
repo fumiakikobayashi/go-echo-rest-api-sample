@@ -1,8 +1,8 @@
 package Domains
 
 import (
-	"go-ddd-rest-api-sample/src/Infrastructures/Models"
-	"go-ddd-rest-api-sample/src/Shared"
+	"go-echo-rest-api-sample/src/Infrastructures/Models"
+	"go-echo-rest-api-sample/src/Shared"
 )
 
 func CreateTask(taskModel Models.TaskModel) (*Task, error) {

@@ -3,11 +3,11 @@ package Repositories
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	Domains "go-ddd-rest-api-sample/src/Domains/Task"
-	"go-ddd-rest-api-sample/src/Infrastructures/Models"
-	"go-ddd-rest-api-sample/src/Shared"
-	uShared "go-ddd-rest-api-sample/src/UseCases/Shared"
-	UseCase "go-ddd-rest-api-sample/src/UseCases/Task"
+	Domains "go-echo-rest-api-sample/src/Domains/Task"
+	"go-echo-rest-api-sample/src/Infrastructures/Models"
+	"go-echo-rest-api-sample/src/Shared"
+	uShared "go-echo-rest-api-sample/src/UseCases/Shared"
+	UseCase "go-echo-rest-api-sample/src/UseCases/Task"
 	"time"
 )
 
