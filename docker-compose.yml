@@ -19,7 +19,7 @@ services:
         source: .
         target: /app
     tty: true
-    command: air -c .air.toml
+    command: go run cmd/main.go
 
   db:
     build:
