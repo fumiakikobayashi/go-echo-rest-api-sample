@@ -1,4 +1,4 @@
-package Shared
+package logger
 
 import (
 	"github.com/rs/zerolog"

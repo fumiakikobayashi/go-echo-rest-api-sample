@@ -1,8 +1,8 @@
 package UseCases
 
 import (
-	Domains "go-echo-rest-api-sample/src/Domains/Task"
-	Dto "go-echo-rest-api-sample/src/UseCases/Dto/Task"
+	"go-echo-rest-api-sample/src/Domains/Task"
+	"go-echo-rest-api-sample/src/UseCases/Dto/Task"
 )
 
 func CreateTaskDtoList(taskList *Domains.TaskList) Dto.TaskListDto {

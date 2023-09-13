@@ -1,21 +1,19 @@
 package UseCases
 
 import (
-	Domains "go-echo-rest-api-sample/src/Domains/Task"
-	Requests "go-echo-rest-api-sample/src/Presentations/Requests/Task"
+	"go-echo-rest-api-sample/src/Domains/Task"
+	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
 	"go-echo-rest-api-sample/src/Shared"
 	"time"
 )
 
 type UpdateTaskUseCase struct {
 	taskRepository TaskRepositoryInterface
-	logger         Shared.LoggerInterface
 }
 
-func NewUpdateTaskUseCase(taskRepository TaskRepositoryInterface, logger *Shared.LoggerInterface) *UpdateTaskUseCase {
+func NewUpdateTaskUseCase(taskRepository TaskRepositoryInterface) *UpdateTaskUseCase {
 	return &UpdateTaskUseCase{
 		taskRepository: taskRepository,
-		logger:         *logger,
 	}
 }
 

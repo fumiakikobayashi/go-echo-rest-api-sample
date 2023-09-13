@@ -3,19 +3,17 @@ package Infrastructures
 import (
 	"context"
 	"github.com/sashabaranov/go-openai"
-	Domain "go-echo-rest-api-sample/src/Domains/SuggestedTask"
+	"go-echo-rest-api-sample/src/Domains/SuggestedTask"
 	"go-echo-rest-api-sample/src/Shared"
 	"strings"
 )
 
 type SuggestionTask struct {
-	logger *Shared.LoggerInterface
 	client *openai.Client
 }
 
-func NewSuggestionTaskClient(logger *Shared.LoggerInterface, client *openai.Client) SuggestionTask {
+func NewSuggestionTaskClient(client *openai.Client) SuggestionTask {
 	return SuggestionTask{
-		logger: logger,
 		client: client,
 	}
 }

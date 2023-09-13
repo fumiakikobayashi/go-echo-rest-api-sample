@@ -1,20 +1,17 @@
 package UseCases
 
 import (
-	Domains "go-echo-rest-api-sample/src/Domains/Task"
-	Requests "go-echo-rest-api-sample/src/Presentations/Requests/Task"
-	"go-echo-rest-api-sample/src/Shared"
+	"go-echo-rest-api-sample/src/Domains/Task"
+	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
 )
 
 type UpdateTaskFavoriteUseCase struct {
 	taskRepository TaskRepositoryInterface
-	logger         *Shared.LoggerInterface
 }
 
-func NewFavoriteTaskUseCase(taskRepository TaskRepositoryInterface, logger *Shared.LoggerInterface) *UpdateTaskFavoriteUseCase {
+func NewFavoriteTaskUseCase(taskRepository TaskRepositoryInterface) *UpdateTaskFavoriteUseCase {
 	return &UpdateTaskFavoriteUseCase{
 		taskRepository: taskRepository,
-		logger:         logger,
 	}
 }
 

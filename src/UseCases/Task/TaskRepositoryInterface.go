@@ -1,7 +1,7 @@
 package UseCases
 
 import (
-	Domains "go-echo-rest-api-sample/src/Domains/Task"
+	"go-echo-rest-api-sample/src/Domains/Task"
 	"go-echo-rest-api-sample/src/UseCases/Shared"
 )
 

@@ -3,36 +3,35 @@ package src
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/sashabaranov/go-openai"
-	Infrastructures "go-echo-rest-api-sample/src/Infrastructures/Clients"
+	"go-echo-rest-api-sample/src/Infrastructures/Clients"
 	"go-echo-rest-api-sample/src/Infrastructures/Repositories"
-	Presentations "go-echo-rest-api-sample/src/Presentations/Handlers"
-	"go-echo-rest-api-sample/src/Shared"
+	Handlers3 "go-echo-rest-api-sample/src/Presentations/Handlers"
 	UseCases2 "go-echo-rest-api-sample/src/UseCases/SuggestedTask"
-	UseCases "go-echo-rest-api-sample/src/UseCases/Task"
+	"go-echo-rest-api-sample/src/UseCases/Task"
 )
 
 type Handlers struct {
-	TaskHandler          Presentations.TaskHandler
-	SuggestedTaskHandler Presentations.SuggestedTaskHandler
+	TaskHandler          Handlers3.TaskHandler
+	SuggestedTaskHandler Handlers3.SuggestedTaskHandler
 }
 
-func NewHandlers(db *gorm.DB, logger *Shared.LoggerInterface, client *openai.Client) *Handlers {
+func NewHandlers(db *gorm.DB, client *openai.Client) *Handlers {
 	return &Handlers{
-		TaskHandler:          *injectTaskHandlerDependencies(db, logger),
-		SuggestedTaskHandler: *injectSuggestedTaskHandlerDependencies(client, logger),
+		TaskHandler:          *injectTaskHandlerDependencies(db),
+		SuggestedTaskHandler: *injectSuggestedTaskHandlerDependencies(client),
 	}
 }
 
-func injectTaskHandlerDependencies(db *gorm.DB, logger *Shared.LoggerInterface) *Presentations.TaskHandler {
-	taskRepository := Repositories.NewTaskRepository(db, logger)
-	getTasksUseCase := UseCases.NewGetTasksUseCase(taskRepository, logger)
-	getTaskUseCase := UseCases.NewGetTaskUseCase(taskRepository, logger)
-	saveTaskUseCase := UseCases.NewSaveTaskUseCase(taskRepository, logger)
-	updateTaskUseCase := UseCases.NewUpdateTaskUseCase(taskRepository, logger)
-	deleteTaskUseCase := UseCases.NewDeleteTaskUseCase(taskRepository, logger)
-	favoriteTaskUseCase := UseCases.NewFavoriteTaskUseCase(taskRepository, logger)
-	completeTaskUseCase := UseCases.NewUpdateTaskCompleteUseCase(taskRepository, logger)
-	return Presentations.NewTaskHandler(
+func injectTaskHandlerDependencies(db *gorm.DB) *Handlers3.TaskHandler {
+	taskRepository := Repositories.NewTaskRepository(db)
+	getTasksUseCase := UseCases.NewGetTasksUseCase(taskRepository)
+	getTaskUseCase := UseCases.NewGetTaskUseCase(taskRepository)
+	saveTaskUseCase := UseCases.NewSaveTaskUseCase(taskRepository)
+	updateTaskUseCase := UseCases.NewUpdateTaskUseCase(taskRepository)
+	deleteTaskUseCase := UseCases.NewDeleteTaskUseCase(taskRepository)
+	favoriteTaskUseCase := UseCases.NewFavoriteTaskUseCase(taskRepository)
+	completeTaskUseCase := UseCases.NewUpdateTaskCompleteUseCase(taskRepository)
+	return Handlers3.NewTaskHandler(
 		getTasksUseCase,
 		getTaskUseCase,
 		saveTaskUseCase,
@@ -40,15 +39,11 @@ func injectTaskHandlerDependencies(db *gorm.DB, logger *Shared.LoggerInterface) 
 		deleteTaskUseCase,
 		favoriteTaskUseCase,
 		completeTaskUseCase,
-		logger,
 	)
 }
 
-func injectSuggestedTaskHandlerDependencies(client *openai.Client, logger *Shared.LoggerInterface) *Presentations.SuggestedTaskHandler {
-	suggestionTaskClient := Infrastructures.NewSuggestionTaskClient(logger, client)
+func injectSuggestedTaskHandlerDependencies(client *openai.Client) *Handlers3.SuggestedTaskHandler {
+	suggestionTaskClient := Infrastructures.NewSuggestionTaskClient(client)
 	GetSuggestedTaskUseCase := UseCases2.NewGetSuggestedTasksUseCase(suggestionTaskClient)
-	return Presentations.NewSuggestedTaskHandler(
-		GetSuggestedTaskUseCase,
-		logger,
-	)
+	return Handlers3.NewSuggestedTaskHandler(GetSuggestedTaskUseCase)
 }

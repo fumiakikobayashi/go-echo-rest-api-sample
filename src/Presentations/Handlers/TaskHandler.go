@@ -2,32 +2,29 @@ package Handlers
 
 import (
 	"github.com/labstack/echo/v4"
-	Requests "go-echo-rest-api-sample/src/Presentations/Requests/Task"
-	"go-echo-rest-api-sample/src/Shared"
-	UseCase "go-echo-rest-api-sample/src/UseCases/Task"
+	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
+	"go-echo-rest-api-sample/src/UseCases/Task"
 	"net/http"
 )
 
 type TaskHandler struct {
-	getTasksUseCase           UseCase.GetTasksUseCase
-	getTaskUseCase            UseCase.GetTaskUseCase
-	saveTaskUseCase           UseCase.SaveTaskUseCase
-	updateTaskUseCase         UseCase.UpdateTaskUseCase
-	deleteTaskUseCase         UseCase.DeleteTaskUseCase
-	updateFavoriteTaskUseCase UseCase.UpdateTaskFavoriteUseCase
-	updateCompleteTaskUseCase UseCase.UpdateTaskCompleteUseCase
-	logger                    Shared.LoggerInterface
+	getTasksUseCase           UseCases.GetTasksUseCase
+	getTaskUseCase            UseCases.GetTaskUseCase
+	saveTaskUseCase           UseCases.SaveTaskUseCase
+	updateTaskUseCase         UseCases.UpdateTaskUseCase
+	deleteTaskUseCase         UseCases.DeleteTaskUseCase
+	updateFavoriteTaskUseCase UseCases.UpdateTaskFavoriteUseCase
+	updateCompleteTaskUseCase UseCases.UpdateTaskCompleteUseCase
 }
 
 func NewTaskHandler(
-	getTasksUseCase *UseCase.GetTasksUseCase,
-	getTaskUseCase *UseCase.GetTaskUseCase,
-	saveTaskUseCase *UseCase.SaveTaskUseCase,
-	updateTaskUseCase *UseCase.UpdateTaskUseCase,
-	deleteTaskUseCase *UseCase.DeleteTaskUseCase,
-	updateFavoriteTaskUseCase *UseCase.UpdateTaskFavoriteUseCase,
-	updateCompleteTaskUseCase *UseCase.UpdateTaskCompleteUseCase,
-	logger *Shared.LoggerInterface,
+	getTasksUseCase *UseCases.GetTasksUseCase,
+	getTaskUseCase *UseCases.GetTaskUseCase,
+	saveTaskUseCase *UseCases.SaveTaskUseCase,
+	updateTaskUseCase *UseCases.UpdateTaskUseCase,
+	deleteTaskUseCase *UseCases.DeleteTaskUseCase,
+	updateFavoriteTaskUseCase *UseCases.UpdateTaskFavoriteUseCase,
+	updateCompleteTaskUseCase *UseCases.UpdateTaskCompleteUseCase,
 ) *TaskHandler {
 	return &TaskHandler{
 		getTasksUseCase:           *getTasksUseCase,
@@ -37,7 +34,6 @@ func NewTaskHandler(
 		deleteTaskUseCase:         *deleteTaskUseCase,
 		updateFavoriteTaskUseCase: *updateFavoriteTaskUseCase,
 		updateCompleteTaskUseCase: *updateCompleteTaskUseCase,
-		logger:                    *logger,
 	}
 }
 

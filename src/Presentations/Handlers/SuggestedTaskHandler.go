@@ -3,23 +3,19 @@ package Handlers
 import (
 	"github.com/labstack/echo/v4"
 	Requests2 "go-echo-rest-api-sample/src/Presentations/Requests/SuggestedTask"
-	"go-echo-rest-api-sample/src/Shared"
-	UseCases "go-echo-rest-api-sample/src/UseCases/SuggestedTask"
+	"go-echo-rest-api-sample/src/UseCases/SuggestedTask"
 	"net/http"
 )
 
 type SuggestedTaskHandler struct {
 	getSuggestedTasksUseCase UseCases.GetSuggestedTasksUseCase
-	logger                   *Shared.LoggerInterface
 }
 
 func NewSuggestedTaskHandler(
 	getSuggestedTasksUseCase *UseCases.GetSuggestedTasksUseCase,
-	logger *Shared.LoggerInterface,
 ) *SuggestedTaskHandler {
 	return &SuggestedTaskHandler{
 		getSuggestedTasksUseCase: *getSuggestedTasksUseCase,
-		logger:                   logger,
 	}
 }
 
