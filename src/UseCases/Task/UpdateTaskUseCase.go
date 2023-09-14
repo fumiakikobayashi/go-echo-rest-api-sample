@@ -1,6 +1,7 @@
 package UseCases
 
 import (
+	"go-echo-rest-api-sample/src/DomainServices"
 	"go-echo-rest-api-sample/src/Domains/Task"
 	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
 	"go-echo-rest-api-sample/src/Shared"
@@ -8,10 +9,10 @@ import (
 )
 
 type UpdateTaskUseCase struct {
-	taskRepository TaskRepositoryInterface
+	taskRepository DomainServices.ITaskRepository
 }
 
-func NewUpdateTaskUseCase(taskRepository TaskRepositoryInterface) *UpdateTaskUseCase {
+func NewUpdateTaskUseCase(taskRepository DomainServices.ITaskRepository) *UpdateTaskUseCase {
 	return &UpdateTaskUseCase{
 		taskRepository: taskRepository,
 	}

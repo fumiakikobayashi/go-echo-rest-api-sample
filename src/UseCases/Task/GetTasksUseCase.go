@@ -1,16 +1,17 @@
 package UseCases
 
 import (
+	"go-echo-rest-api-sample/src/DomainServices"
 	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
 	"go-echo-rest-api-sample/src/UseCases/Dto/Task"
 	Shared2 "go-echo-rest-api-sample/src/UseCases/Shared"
 )
 
 type GetTasksUseCase struct {
-	taskRepository TaskRepositoryInterface
+	taskRepository DomainServices.ITaskRepository
 }
 
-func NewGetTasksUseCase(taskRepository TaskRepositoryInterface) *GetTasksUseCase {
+func NewGetTasksUseCase(taskRepository DomainServices.ITaskRepository) *GetTasksUseCase {
 	return &GetTasksUseCase{
 		taskRepository: taskRepository,
 	}

@@ -3,11 +3,11 @@ package Repositories
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
+	UseCase "go-echo-rest-api-sample/src/DomainServices"
 	"go-echo-rest-api-sample/src/Domains/Task"
 	"go-echo-rest-api-sample/src/Infrastructures/Models"
 	"go-echo-rest-api-sample/src/Shared"
 	uShared "go-echo-rest-api-sample/src/UseCases/Shared"
-	UseCase "go-echo-rest-api-sample/src/UseCases/Task"
 	"time"
 )
 
@@ -15,7 +15,7 @@ type taskRepository struct {
 	db *gorm.DB
 }
 
-func NewTaskRepository(db *gorm.DB) UseCase.TaskRepositoryInterface {
+func NewTaskRepository(db *gorm.DB) UseCase.ITaskRepository {
 	return &taskRepository{
 		db: db,
 	}

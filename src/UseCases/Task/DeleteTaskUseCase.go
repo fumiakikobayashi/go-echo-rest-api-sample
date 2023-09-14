@@ -1,16 +1,17 @@
 package UseCases
 
 import (
+	"go-echo-rest-api-sample/src/DomainServices"
 	Domains "go-echo-rest-api-sample/src/Domains/Task"
 	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
 	"go-echo-rest-api-sample/src/Shared"
 )
 
 type DeleteTaskUseCase struct {
-	taskRepository TaskRepositoryInterface
+	taskRepository DomainServices.ITaskRepository
 }
 
-func NewDeleteTaskUseCase(taskRepository TaskRepositoryInterface) *DeleteTaskUseCase {
+func NewDeleteTaskUseCase(taskRepository DomainServices.ITaskRepository) *DeleteTaskUseCase {
 	return &DeleteTaskUseCase{
 		taskRepository: taskRepository,
 	}

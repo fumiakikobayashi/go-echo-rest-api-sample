@@ -1,15 +1,16 @@
 package UseCases
 
 import (
+	"go-echo-rest-api-sample/src/DomainServices"
 	"go-echo-rest-api-sample/src/Presentations/Requests/SuggestedTask"
 	"go-echo-rest-api-sample/src/UseCases/Dto/SuggestedTask"
 )
 
 type GetSuggestedTasksUseCase struct {
-	suggestionTask SuggestionTaskClient
+	suggestionTask DomainServices.ISuggestionTask
 }
 
-func NewGetSuggestedTasksUseCase(suggestionTask SuggestionTaskClient) *GetSuggestedTasksUseCase {
+func NewGetSuggestedTasksUseCase(suggestionTask DomainServices.ISuggestionTask) *GetSuggestedTasksUseCase {
 	return &GetSuggestedTasksUseCase{
 		suggestionTask: suggestionTask,
 	}

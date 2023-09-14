@@ -1,11 +1,11 @@
-package UseCases
+package DomainServices
 
 import (
 	"go-echo-rest-api-sample/src/Domains/Task"
 	"go-echo-rest-api-sample/src/UseCases/Shared"
 )
 
-type TaskRepositoryInterface interface {
+type ITaskRepository interface {
 	GetTasks(sortType Shared.SortType, sortOrder Shared.SortOrder) (*Domains.TaskList, error)
 	GetTask(taskId Domains.TaskId) (*Domains.Task, error)
 	SaveTask(task *Domains.Task) error

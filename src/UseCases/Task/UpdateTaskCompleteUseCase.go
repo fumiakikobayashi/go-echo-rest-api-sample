@@ -1,15 +1,16 @@
 package UseCases
 
 import (
+	"go-echo-rest-api-sample/src/DomainServices"
 	"go-echo-rest-api-sample/src/Domains/Task"
 	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
 )
 
 type UpdateTaskCompleteUseCase struct {
-	taskRepository TaskRepositoryInterface
+	taskRepository DomainServices.ITaskRepository
 }
 
-func NewUpdateTaskCompleteUseCase(taskRepository TaskRepositoryInterface) *UpdateTaskCompleteUseCase {
+func NewUpdateTaskCompleteUseCase(taskRepository DomainServices.ITaskRepository) *UpdateTaskCompleteUseCase {
 	return &UpdateTaskCompleteUseCase{
 		taskRepository: taskRepository,
 	}

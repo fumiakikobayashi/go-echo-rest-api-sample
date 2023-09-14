@@ -1,6 +1,7 @@
 package UseCases
 
 import (
+	"go-echo-rest-api-sample/src/DomainServices"
 	"go-echo-rest-api-sample/src/Domains/Task"
 	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
 	"go-echo-rest-api-sample/src/Shared"
@@ -8,10 +9,10 @@ import (
 )
 
 type SaveTaskUseCase struct {
-	taskRepository TaskRepositoryInterface
+	taskRepository DomainServices.ITaskRepository
 }
 
-func NewSaveTaskUseCase(taskRepository TaskRepositoryInterface) *SaveTaskUseCase {
+func NewSaveTaskUseCase(taskRepository DomainServices.ITaskRepository) *SaveTaskUseCase {
 	return &SaveTaskUseCase{
 		taskRepository: taskRepository,
 	}

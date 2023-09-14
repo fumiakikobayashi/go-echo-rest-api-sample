@@ -1,15 +1,16 @@
 package UseCases
 
 import (
+	"go-echo-rest-api-sample/src/DomainServices"
 	"go-echo-rest-api-sample/src/Domains/Task"
 	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
 )
 
 type UpdateTaskFavoriteUseCase struct {
-	taskRepository TaskRepositoryInterface
+	taskRepository DomainServices.ITaskRepository
 }
 
-func NewFavoriteTaskUseCase(taskRepository TaskRepositoryInterface) *UpdateTaskFavoriteUseCase {
+func NewFavoriteTaskUseCase(taskRepository DomainServices.ITaskRepository) *UpdateTaskFavoriteUseCase {
 	return &UpdateTaskFavoriteUseCase{
 		taskRepository: taskRepository,
 	}
