@@ -19,3 +19,9 @@ app:
 	docker compose exec app bash
 db:
 	docker compose exec db bash
+logs:
+	docker compose logs -f --tail=100
+app-log:
+	docker compose logs -f --tail=100 app
+db-log:
+	docker compose logs -f --tail=100 db
