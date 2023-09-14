@@ -1,6 +1,7 @@
 package Logger
 
 type ILogger interface {
+	Close() error
 	Debug(fields ...interface{})
 	Info(fields ...interface{})
 	Warn(fields ...interface{})

@@ -1,13 +1,17 @@
 package Logger
 
 import (
+	"fmt"
 	"github.com/rs/zerolog"
 	"go-echo-rest-api-sample/src/Shared"
 	"os"
+	"path/filepath"
+	"time"
 )
 
 type zeroLog struct {
 	logger zerolog.Logger
+	file   *os.File
 }
 
 // NewLogger
@@ -28,12 +32,35 @@ func NewLogger() ILogger {
 		level = zerolog.InfoLevel
 	}
 
+	// ディレクトリの存在を確認し、存在しない場合は作成
+	logFileName := fmt.Sprintf(
+		"/logs/%s_golang.log",
+		time.Now().Format("20060102"),
+	)
+	dir := filepath.Dir(logFileName)
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			panic(err)
+		}
+	}
+
+	// 日付を含むファイル名でログファイルを開く（存在しない場合は作成）
+	file, err := os.OpenFile(
+		logFileName,
+		os.O_APPEND|os.O_CREATE|os.O_WRONLY,
+		0644,
+	)
+	if err != nil {
+		panic(err)
+	}
+
 	// FIXME 深さを「4」と指定しているが、実装に依存するため別の方法を検討する
 	zerolog.CallerSkipFrameCount = 4
 	zerolog.SetGlobalLevel(level)
 	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 	return &zeroLog{
-		logger: zerolog.New(os.Stdout).With().Timestamp().Caller().Logger(),
+		logger: zerolog.New(file).With().Timestamp().Caller().Logger(),
+		file:   file,
 	}
 }
 
@@ -107,6 +134,10 @@ func (l *zeroLog) log(level zerolog.Level, fields ...interface{}) {
 	}
 
 	event.Send()
+}
+
+func (l *zeroLog) Close() error {
+	return l.file.Close()
 }
 
 // shouldLogStackTrace ログレベルがError＆本番環境以外の場合は、スタックトレースを出力する
