@@ -9,7 +9,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-func Init() *gorm.DB {
+func SetupDB() *gorm.DB {
 	user := os.Getenv("DB_USERNAME")
 	password := os.Getenv("DB_PASSWORD")
 	dbname := os.Getenv("DB_DATABASE")
@@ -25,7 +25,6 @@ func Init() *gorm.DB {
 		port,
 		dbname,
 	)
-	fmt.Println(conn)
 	db, err := gorm.Open("mysql", conn)
 	if err != nil {
 		panic(err.Error())
