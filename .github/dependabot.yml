@@ -17,3 +17,7 @@ updates:
     directory: "/docker/app"
     schedule:
       interval: "weekly"
+  - package-ecosystem: "docker"
+    directory: "/docker/pma"
+    schedule:
+      interval: "weekly"

@@ -43,7 +43,9 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
 
   pma:
-    image: phpmyadmin/phpmyadmin:5.2.0
+    build:
+      context: .
+      dockerfile: ./docker/pma/Dockerfile
     environment:
       - PMA_HOST=db
       - PMA_USER=${DB_USERNAME}
