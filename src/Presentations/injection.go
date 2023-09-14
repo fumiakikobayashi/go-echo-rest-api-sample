@@ -1,18 +1,18 @@
-package src
+package Presentations
 
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/sashabaranov/go-openai"
 	"go-echo-rest-api-sample/src/Infrastructures/Clients"
 	"go-echo-rest-api-sample/src/Infrastructures/Repositories"
-	Handlers3 "go-echo-rest-api-sample/src/Presentations/Handlers"
+	Handlers2 "go-echo-rest-api-sample/src/Presentations/Handlers"
 	UseCases2 "go-echo-rest-api-sample/src/UseCases/SuggestedTask"
 	"go-echo-rest-api-sample/src/UseCases/Task"
 )
 
 type Handlers struct {
-	TaskHandler          Handlers3.TaskHandler
-	SuggestedTaskHandler Handlers3.SuggestedTaskHandler
+	TaskHandler          Handlers2.TaskHandler
+	SuggestedTaskHandler Handlers2.SuggestedTaskHandler
 }
 
 func NewHandlers(db *gorm.DB, client *openai.Client) *Handlers {
@@ -22,7 +22,7 @@ func NewHandlers(db *gorm.DB, client *openai.Client) *Handlers {
 	}
 }
 
-func injectTaskHandlerDependencies(db *gorm.DB) *Handlers3.TaskHandler {
+func injectTaskHandlerDependencies(db *gorm.DB) *Handlers2.TaskHandler {
 	taskRepository := Repositories.NewTaskRepository(db)
 	getTasksUseCase := UseCases.NewGetTasksUseCase(taskRepository)
 	getTaskUseCase := UseCases.NewGetTaskUseCase(taskRepository)
@@ -31,7 +31,7 @@ func injectTaskHandlerDependencies(db *gorm.DB) *Handlers3.TaskHandler {
 	deleteTaskUseCase := UseCases.NewDeleteTaskUseCase(taskRepository)
 	favoriteTaskUseCase := UseCases.NewFavoriteTaskUseCase(taskRepository)
 	completeTaskUseCase := UseCases.NewUpdateTaskCompleteUseCase(taskRepository)
-	return Handlers3.NewTaskHandler(
+	return Handlers2.NewTaskHandler(
 		getTasksUseCase,
 		getTaskUseCase,
 		saveTaskUseCase,
@@ -42,8 +42,8 @@ func injectTaskHandlerDependencies(db *gorm.DB) *Handlers3.TaskHandler {
 	)
 }
 
-func injectSuggestedTaskHandlerDependencies(client *openai.Client) *Handlers3.SuggestedTaskHandler {
+func injectSuggestedTaskHandlerDependencies(client *openai.Client) *Handlers2.SuggestedTaskHandler {
 	suggestionTaskClient := Infrastructures.NewSuggestionTaskClient(client)
 	GetSuggestedTaskUseCase := UseCases2.NewGetSuggestedTasksUseCase(suggestionTaskClient)
-	return Handlers3.NewSuggestedTaskHandler(GetSuggestedTaskUseCase)
+	return Handlers2.NewSuggestedTaskHandler(GetSuggestedTaskUseCase)
 }
