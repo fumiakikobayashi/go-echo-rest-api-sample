@@ -16,6 +16,7 @@ import (
 )
 
 func main() {
+	// loggerの初期化
 	log := Logger.NewLogger()
 	if log == nil {
 		log.Error("loggerの初期化に失敗しました")
