@@ -3,6 +3,7 @@ version: "3.9"
 volumes:
   db-store:
   pma-session-store:
+  app-logs:
 
 services:
   app:
@@ -18,6 +19,9 @@ services:
       - type: bind
         source: .
         target: /app
+      - type: volume
+        source: app-logs
+        target: /logs
     tty: true
     command: go run cmd/main.go
 
