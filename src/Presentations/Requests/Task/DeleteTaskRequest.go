@@ -7,6 +7,5 @@ type DeleteTaskRequest struct {
 }
 
 func (r *DeleteTaskRequest) Validate() error {
-	validate := validator.New()
-	return validate.Struct(r)
+	return validator.New().Struct(r)
 }

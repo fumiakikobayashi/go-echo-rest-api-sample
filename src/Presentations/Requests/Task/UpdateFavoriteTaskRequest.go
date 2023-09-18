@@ -7,6 +7,5 @@ type UpdateTaskFavoriteRequest struct {
 }
 
 func (r *UpdateTaskFavoriteRequest) Validate() error {
-	validate := validator.New()
-	return validate.Struct(r)
+	return validator.New().Struct(r)
 }

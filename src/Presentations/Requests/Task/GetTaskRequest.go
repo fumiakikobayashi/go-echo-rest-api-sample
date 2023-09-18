@@ -7,6 +7,5 @@ type GetTaskRequest struct {
 }
 
 func (r *GetTaskRequest) Validate() error {
-	validate := validator.New()
-	return validate.Struct(r)
+	return validator.New().Struct(r)
 }

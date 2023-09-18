@@ -7,6 +7,5 @@ type UpdateTaskCompleteRequest struct {
 }
 
 func (r *UpdateTaskCompleteRequest) Validate() error {
-	validate := validator.New()
-	return validate.Struct(r)
+	return validator.New().Struct(r)
 }
