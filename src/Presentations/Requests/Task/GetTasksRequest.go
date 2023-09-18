@@ -5,8 +5,8 @@ import (
 )
 
 type GetTasksRequest struct {
-	Sort  string `query:"sort" validate:"required,oneof=name deadline favorite"`
-	Order string `query:"order" validate:"required,oneof=asc desc"`
+	Sort  string `query:"sort" validate:"omitempty,oneof=name deadline favorite"`
+	Order string `query:"order" validate:"omitempty,oneof=asc desc"`
 }
 
 func (r *GetTasksRequest) Validate() error {
