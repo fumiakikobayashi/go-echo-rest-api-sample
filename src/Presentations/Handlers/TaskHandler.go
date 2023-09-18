@@ -1,8 +1,10 @@
 package Handlers
 
 import (
+	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"go-echo-rest-api-sample/src/Presentations/Requests/Task"
+	"go-echo-rest-api-sample/src/Shared/Logger"
 	"go-echo-rest-api-sample/src/UseCases/Task"
 	"net/http"
 )
@@ -38,23 +40,41 @@ func NewTaskHandler(
 }
 
 func (c *TaskHandler) GetTasks(ctx echo.Context) error {
+	logger := Logger.FromContext(ctx)
+
 	var tasksRequest Requests.GetTasksRequest
 	if err := ctx.Bind(&tasksRequest); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+		return echo.NewHTTPError(http.StatusBadRequest, "リクエストパラメータのバインドに失敗しました")
+	}
+
+	if err := tasksRequest.Validate(); err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			logger.Error("バリデーションに失敗しました", "Field", err.Field(), "Tag", err.Tag(), "ActualValue", err.Value(), "ExpectedValue", err.Param())
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, "リクエストパラメータが不正です")
 	}
 
 	taskListDto, err := c.getTasksUseCase.Execute(tasksRequest)
 	if err != nil {
-		return err
+		return echo.NewHTTPError(http.StatusInternalServerError, "タスク一覧の取得に失敗しました")
 	}
 
 	return ctx.JSON(http.StatusOK, taskListDto)
 }
 
 func (c *TaskHandler) GetTask(ctx echo.Context) error {
+	logger := Logger.FromContext(ctx)
+
 	var taskRequest Requests.GetTaskRequest
 	if err := ctx.Bind(&taskRequest); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	if err := taskRequest.Validate(); err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			logger.Error("バリデーションに失敗しました", "Field", err.Field(), "Tag", err.Tag(), "ActualValue", err.Value(), "ExpectedValue", err.Param())
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, "リクエストパラメータが不正です")
 	}
 
 	taskDto, err := c.getTaskUseCase.Execute(taskRequest)
@@ -66,9 +86,18 @@ func (c *TaskHandler) GetTask(ctx echo.Context) error {
 }
 
 func (c *TaskHandler) SaveTask(ctx echo.Context) error {
+	logger := Logger.FromContext(ctx)
+
 	var taskRequest Requests.SaveTaskRequest
 	if err := ctx.Bind(&taskRequest); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	if err := taskRequest.Validate(); err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			logger.Error("バリデーションに失敗しました", "Field", err.Field(), "Tag", err.Tag(), "ActualValue", err.Value(), "ExpectedValue", err.Param())
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, "リクエストパラメータが不正です")
 	}
 
 	if err := c.saveTaskUseCase.Execute(taskRequest); err != nil {
@@ -82,9 +111,18 @@ func (c *TaskHandler) SaveTask(ctx echo.Context) error {
 }
 
 func (c *TaskHandler) UpdateTask(ctx echo.Context) error {
+	logger := Logger.FromContext(ctx)
+
 	var taskRequest Requests.UpdateTaskRequest
 	if err := ctx.Bind(&taskRequest); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	if err := taskRequest.Validate(); err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			logger.Error("バリデーションに失敗しました", "Field", err.Field(), "Tag", err.Tag(), "ActualValue", err.Value(), "ExpectedValue", err.Param())
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, "リクエストパラメータが不正です")
 	}
 
 	if err := c.updateTaskUseCase.Execute(taskRequest); err != nil {
@@ -98,6 +136,8 @@ func (c *TaskHandler) UpdateTask(ctx echo.Context) error {
 }
 
 func (c *TaskHandler) DeleteTask(ctx echo.Context) error {
+	logger := Logger.FromContext(ctx)
+
 	var taskRequest Requests.DeleteTaskRequest
 	if err := ctx.Bind(&taskRequest); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
@@ -107,6 +147,13 @@ func (c *TaskHandler) DeleteTask(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
+	if err := taskRequest.Validate(); err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			logger.Error("バリデーションに失敗しました", "Field", err.Field(), "Tag", err.Tag(), "ActualValue", err.Value(), "ExpectedValue", err.Param())
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, "リクエストパラメータが不正です")
+	}
+
 	response := echo.Map{
 		"message": "タスクを削除しました",
 	}
@@ -114,6 +161,8 @@ func (c *TaskHandler) DeleteTask(ctx echo.Context) error {
 }
 
 func (c *TaskHandler) UpdateTaskFavorite(ctx echo.Context) error {
+	logger := Logger.FromContext(ctx)
+
 	var taskRequest Requests.UpdateTaskFavoriteRequest
 	if err := ctx.Bind(&taskRequest); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
@@ -123,6 +172,13 @@ func (c *TaskHandler) UpdateTaskFavorite(ctx echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
+	if err := taskRequest.Validate(); err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			logger.Error("バリデーションに失敗しました", "Field", err.Field(), "Tag", err.Tag(), "ActualValue", err.Value(), "ExpectedValue", err.Param())
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, "リクエストパラメータが不正です")
+	}
+
 	response := echo.Map{
 		"message": "お気に入り状態を更新しました",
 	}
@@ -130,9 +186,18 @@ func (c *TaskHandler) UpdateTaskFavorite(ctx echo.Context) error {
 }
 
 func (c *TaskHandler) UpdateTaskComplete(ctx echo.Context) error {
+	logger := Logger.FromContext(ctx)
+
 	var taskRequest Requests.UpdateTaskCompleteRequest
 	if err := ctx.Bind(&taskRequest); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	if err := taskRequest.Validate(); err != nil {
+		for _, err := range err.(validator.ValidationErrors) {
+			logger.Error("バリデーションに失敗しました", "Field", err.Field(), "Tag", err.Tag(), "ActualValue", err.Value(), "ExpectedValue", err.Param())
+		}
+		return echo.NewHTTPError(http.StatusBadRequest, "リクエストパラメータが不正です")
 	}
 
 	if err := c.updateCompleteTaskUseCase.Execute(taskRequest); err != nil {
