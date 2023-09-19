@@ -1,13 +1,8 @@
 package Shared
 
-import (
-	"go.uber.org/zap"
-)
-
 type SampleError struct {
-	Code       string
-	Message    string
-	StackTrace string
+	Code    string
+	Message string
 }
 
 func (me *SampleError) Error() string {
@@ -15,10 +10,8 @@ func (me *SampleError) Error() string {
 }
 
 func NewSampleError(code string, message string) *SampleError {
-	stack := zap.Stack("").String
 	return &SampleError{
-		Code:       code,
-		Message:    message,
-		StackTrace: stack,
+		Code:    code,
+		Message: message,
 	}
 }
