@@ -45,4 +45,4 @@ go-echo-rest-api-sample-pma-1   "/docker-entrypoint.…"   pma                 r
   - `GET /tasks/suggestion`
 
 ## Tips
-- 各種コマンドはMakefileをご覧ください [Makefile](https://github.com/fumiakikobayashi/customer-management-sample/blob/main/Makefile)
+- 各種コマンドはMakefileをご覧ください [Makefile](https://github.com/fumiakikobayashi/go-echo-rest-api-sample/blob/main/Makefile)
