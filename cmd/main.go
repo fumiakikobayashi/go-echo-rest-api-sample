@@ -76,7 +76,7 @@ func main() {
 	e.Use(middleware.Recover())
 	e.Use(Middlewares.CustomLogger(log))
 
-	// Start server
+	// サーバーを起動
 	if err := e.Start(":8080"); err != nil {
 		log.Error("サーバーの起動に失敗しました", "err", err.Error())
 		return
