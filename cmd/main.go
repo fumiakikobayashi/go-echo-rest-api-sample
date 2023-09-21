@@ -68,8 +68,6 @@ func main() {
 		return
 	}
 
-	// テスト用のコメント
-
 	// エンドポイントを定義
 	Routes.SetUpRoutes(e, handlers)
 
