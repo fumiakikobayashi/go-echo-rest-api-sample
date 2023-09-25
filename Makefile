@@ -1,3 +1,10 @@
+init:
+	cp .env.example .env
+	@make build
+	@make up
+	docker compose exec app go mod download
+	docker compose exec app go mod tidy
+	docker compose exec app go build -v ./...
 up:
 	docker compose up -d
 build:
