@@ -9,12 +9,11 @@
 $ git clone https://github.com/fumiakikobayashi/go-echo-rest-api-sample.git
 $ cd go-echo-rest-api-sample
 ```
-下記コマンドを実行してコンテナを立ち上げてください。（`make`コマンドを使用することで、`Makefile`に定義しているコマンドを実行することができます。）
+下記コマンドを実行してセットアップを行なってください。（`make`コマンドを使用することで、`Makefile`に定義しているコマンドを実行することができます。）
 
 ※ このコマンドは初回のみ実行します
 ```
-$ make build
-$ make up
+$ make init
 ```
 続いて`make ps` コマンドを実行し、コンテナが`runnning`になっていることを確認してください
 ```
