@@ -1,0 +1,43 @@
+version: "3.9"
+
+volumes:
+  db-store:
+  pma-session-store:
+  app-logs:
+
+services:
+  app:
+    image: ${APP_IMAGE}
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+      - type: volume
+        source: app-logs
+        target: /logs
+    tty: true
+    command: go run cmd/main.go
+
+  db:
+    image: ${DB_IMAGE}
+    ports:
+      - target: 3306
+        published: 3306
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: volume
+        source: db-store
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
